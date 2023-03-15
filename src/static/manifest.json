@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Codesistant",
+  "description": "Suggest a coding problem within mentioned frequency of days.",
+  "version": "1.0.0",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_title": "Click Me",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html"
+}
