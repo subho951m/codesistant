@@ -1,7 +1,7 @@
-import React from "react";
-import "./popup.css";
-import { Button } from "@mui/material";
-import "@fontsource/roboto";
+import React from 'react'
+import './popup.css'
+import { Button } from '@mui/material'
+import '@fontsource/roboto'
 
 const Popup = () => {
   return (
@@ -9,7 +9,7 @@ const Popup = () => {
       <h1>Hello World!</h1>
       <Button>My Button</Button>
     </div>
-  );
-};
+  )
+}
 
-export default Popup;
+export default Popup

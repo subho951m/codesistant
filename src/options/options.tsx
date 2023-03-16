@@ -1,5 +1,5 @@
-import React from "react";
-import "./options.css";
+import React from 'react'
+import './options.css'
 
 const Options = () => {
   return (
@@ -7,7 +7,7 @@ const Options = () => {
       <h1>Hello Options</h1>
       <h3>Options</h3>
     </div>
-  );
-};
+  )
+}
 
-export default Options;
+export default Options
