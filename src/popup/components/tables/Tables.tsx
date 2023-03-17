@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { styled } from '@mui/material/styles'
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
@@ -8,6 +8,14 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import TablePagination from '@mui/material/TablePagination'
+
+const theme = createTheme({
+  typography: {
+    // In Chinese and Japanese the characters are usually larger,
+    // so a smaller fontsize may be appropriate.
+    fontSize: 10,
+  },
+})
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -96,15 +104,17 @@ export default function CustomizedTables() {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      <ThemeProvider theme={theme}>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </ThemeProvider>
     </Paper>
   )
 }
