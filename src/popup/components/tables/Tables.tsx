@@ -11,9 +11,7 @@ import TablePagination from '@mui/material/TablePagination'
 
 const theme = createTheme({
   typography: {
-    // In Chinese and Japanese the characters are usually larger,
-    // so a smaller fontsize may be appropriate.
-    fontSize: 10,
+    fontSize: 12,
   },
 })
 
@@ -38,29 +36,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-function createData(name: string, tag: string, isSolved: string) {
-  return { name, tag, isSolved }
+function createData(name: string, tag: string, isSolved: string, id: number) {
+  return { name, tag, isSolved, id }
 }
 
 const rows = [
-  createData(
-    'A - Dry String F#knl fwejwjfg wefjopwjfg wefjhfgjwwfg fwjhwefg wfnfwenf wsfnwfegnwe fwfnkiwf wfwnkewfn wfnwfkwf f bn',
-    'Implementation svnlsvn svgnwerkgv wknvw  vksv evklnelgvn  svfnv ',
-    'false'
-  ),
-  createData('A - N Queens', 'dp', 'true'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false'),
+  createData('A - Dry String', 'Implementation ', 'false', 1),
+  createData('B - N Queens', 'dp', 'true', 2),
+  createData('C - Permutation Numbers', 'Combinatorics', 'false', 3),
+  createData('D - Permutation Numbers', 'Combinatorics', 'false', 4),
+  createData('E - Permutation Numbers', 'Combinatorics', 'false', 5),
+  createData('F - Permutation Numbers', 'Combinatorics', 'false', 6),
+  createData('G - Permutation Numbers', 'Combinatorics', 'false', 7),
+  createData('H - Permutation Numbers', 'Combinatorics', 'false', 8),
+  createData('I - Permutation Numbers', 'Combinatorics', 'false', 9),
+  createData('J - Permutation Numbers', 'Combinatorics', 'false', 10),
+  createData('K - Permutation Numbers', 'Combinatorics', 'false', 11),
+  createData('L - Permutation Numbers', 'Combinatorics', 'false', 12),
+  createData('M - Permutation Numbers', 'Combinatorics', 'false', 13),
+  createData('N - Permutation Numbers', 'Combinatorics', 'false', 14),
 ]
 
 export default function CustomizedTables() {
@@ -91,7 +85,7 @@ export default function CustomizedTables() {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <StyledTableRow key={row.name}>
+                <StyledTableRow key={row.id}>
                   <StyledTableCell component="th" scope="row">
                     {row.name}
                   </StyledTableCell>
