@@ -1,13 +1,18 @@
 import React from 'react'
 import './popup.css'
-import { Button } from '@mui/material'
 import '@fontsource/roboto'
+import Logo from './components/logo/Logo'
+import Codeforces from './components/codeforces/Codeforces'
 
 const Popup = () => {
   return (
     <div className="h-screen">
-      <h1>Hello World!</h1>
-      <Button>My Button</Button>
+      <div className="header">
+        <Logo />
+      </div>
+      <div className="codeforces-content">
+        <Codeforces />
+      </div>
     </div>
   )
 }

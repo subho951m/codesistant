@@ -1,0 +1,11 @@
+.logo span {
+  color: #dd4848;
+  font-size: 1.3rem;
+  margin: 0rem 5rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
+.logo p {
+  display: contents;
+}

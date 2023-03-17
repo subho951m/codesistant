@@ -1,0 +1,15 @@
+.codeforces-header {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.8rem 0rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #e18527;
+}
+
+.codeforces-logo {
+  font-size: 1.3rem;
+  color: black;
+}
