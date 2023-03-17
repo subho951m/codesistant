@@ -36,25 +36,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-function createData(name: string, tag: string, isSolved: string, id: number) {
+function createData(name: string, tag: string, isSolved: boolean, id: number) {
   return { name, tag, isSolved, id }
 }
 
 const rows = [
-  createData('A - Dry String', 'Implementation ', 'false', 1),
-  createData('B - N Queens', 'dp', 'true', 2),
-  createData('C - Permutation Numbers', 'Combinatorics', 'false', 3),
-  createData('D - Permutation Numbers', 'Combinatorics', 'false', 4),
-  createData('E - Permutation Numbers', 'Combinatorics', 'false', 5),
-  createData('F - Permutation Numbers', 'Combinatorics', 'false', 6),
-  createData('G - Permutation Numbers', 'Combinatorics', 'false', 7),
-  createData('H - Permutation Numbers', 'Combinatorics', 'false', 8),
-  createData('I - Permutation Numbers', 'Combinatorics', 'false', 9),
-  createData('J - Permutation Numbers', 'Combinatorics', 'false', 10),
-  createData('K - Permutation Numbers', 'Combinatorics', 'false', 11),
-  createData('L - Permutation Numbers', 'Combinatorics', 'false', 12),
-  createData('M - Permutation Numbers', 'Combinatorics', 'false', 13),
-  createData('N - Permutation Numbers', 'Combinatorics', 'false', 14),
+  createData('A - Dry String', 'Implementation ', false, 1),
+  createData('B - N Queens', 'dp', true, 2),
+  createData('C - Permutation Numbers', 'Combinatorics', false, 3),
+  createData('D - Permutation Numbers', 'Combinatorics', false, 4),
+  createData('E - Permutation Numbers', 'Combinatorics', false, 5),
+  createData('F - Permutation Numbers', 'Combinatorics', false, 6),
+  createData('G - Permutation Numbers', 'Combinatorics', false, 7),
+  createData('H - Permutation Numbers', 'Combinatorics', false, 8),
+  createData('I - Permutation Numbers', 'Combinatorics', false, 9),
+  createData('J - Permutation Numbers', 'Combinatorics', false, 10),
+  createData('K - Permutation Numbers', 'Combinatorics', false, 11),
+  createData('L - Permutation Numbers', 'Combinatorics', false, 12),
+  createData('M - Permutation Numbers', 'Combinatorics', false, 13),
+  createData('N - Permutation Numbers', 'Combinatorics', false, 14),
 ]
 
 export default function CustomizedTables() {
@@ -91,7 +91,7 @@ export default function CustomizedTables() {
                   </StyledTableCell>
                   <StyledTableCell>{row.tag}</StyledTableCell>
                   <StyledTableCell align="right">
-                    {row.isSolved}
+                    {row.isSolved ? 'true' : 'false'}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
