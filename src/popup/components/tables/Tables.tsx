@@ -8,6 +8,10 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import TablePagination from '@mui/material/TablePagination'
+import SolvedButton from '../codeforces/buttons/solved/SolvedButton'
+import UnsolvedButton from '../codeforces/buttons/unsolved/UnsolvedButton'
+
+import Button from '@mui/material/Button'
 
 const theme = createTheme({
   typography: {
@@ -17,7 +21,7 @@ const theme = createTheme({
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: '#973c5e',
     color: theme.palette.common.white,
     fontSize: 14,
   },
@@ -26,11 +30,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }))
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
+const StyledTableRow = styled(TableRow, {
+  shouldForwardProp: (prop) => prop !== 'selected',
+})(({ selected }) => ({
+  backgroundColor: selected ? 'rgb(190 237 200)' : '#fff',
   '&:last-child td, &:last-child th': {
     border: 0,
   },
@@ -72,8 +75,22 @@ export default function CustomizedTables() {
   }
   return (
     <Paper sx={{ width: '100%', mb: 2 }}>
-      <TableContainer sx={{ height: 225 }}>
-        <Table aria-label="customized table">
+      <TableContainer
+        sx={{
+          height: 170,
+          '&::-webkit-scrollbar': {
+            width: '5px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: 'rgba(224, 224, 224, 1)',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgb(193 23 47 / 38%)',
+            borderRadius: '3px',
+          },
+        }}
+      >
+        <Table size="small" aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Problem</StyledTableCell>
@@ -84,17 +101,33 @@ export default function CustomizedTables() {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.name}
-                  </StyledTableCell>
-                  <StyledTableCell>{row.tag}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.isSolved ? 'true' : 'false'}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
+              .map((row) =>
+                row.isSolved ? (
+                  <StyledTableRow key={row.id} selected>
+                    <StyledTableCell component="th" scope="row">
+                      <Button sx={{ fontSize: '11px', padding: 0, margin: 0 }}>
+                        {row.name}
+                      </Button>
+                    </StyledTableCell>
+                    <StyledTableCell>{row.tag}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      <SolvedButton />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ) : (
+                  <StyledTableRow key={row.id}>
+                    <StyledTableCell component="th" scope="row">
+                      <Button sx={{ fontSize: '11px', padding: 0, margin: 0 }}>
+                        {row.name}
+                      </Button>
+                    </StyledTableCell>
+                    <StyledTableCell>{row.tag}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      <UnsolvedButton />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                )
+              )}
           </TableBody>
         </Table>
       </TableContainer>

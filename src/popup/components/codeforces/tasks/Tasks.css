@@ -4,22 +4,5 @@
   font-size: 15px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  border: 2px solid #ab4d4d;
-}
-
-.Button.Mui-disabled {
-  color: white;
-  background: green;
-}
-
-.MuiButtonBase-root-MuiButton-root.Mui-disabled {
-  color: black;
-}
-
-.Button {
-  color: black;
-}
-
-.Button:disabled {
-  color: white;
+  border: 2px solid #973c5e;
 }
