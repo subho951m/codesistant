@@ -59,7 +59,7 @@ const rows = [
 
 export default function CustomizedTables() {
   const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
+  const [rowsPerPage, setRowsPerPage] = React.useState(3)
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
   }
@@ -72,7 +72,7 @@ export default function CustomizedTables() {
   }
   return (
     <Paper sx={{ width: '100%', mb: 2 }}>
-      <TableContainer>
+      <TableContainer sx={{ height: 225 }}>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -100,7 +100,7 @@ export default function CustomizedTables() {
       </TableContainer>
       <ThemeProvider theme={theme}>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[3, 6, 9]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
