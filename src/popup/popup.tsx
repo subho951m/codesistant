@@ -21,7 +21,7 @@ const Popup = () => {
 
   const handleChangePlatform = (event, coding) => {
     if (coding !== platform) {
-      console.log(event)
+      // console.log(event)
       setPlatform(coding)
     }
   }
@@ -32,7 +32,10 @@ const Popup = () => {
         <Logo />
       </div>
       <div className="content-option">
-        <ContentOptions handleChangePlatform={handleChangePlatform} />
+        <ContentOptions
+          handleChangePlatform={handleChangePlatform}
+          activeButton={platform}
+        />
       </div>
       <div className="main-content">{displayPlatform}</div>
     </div>
