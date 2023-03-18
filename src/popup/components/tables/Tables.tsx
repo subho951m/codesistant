@@ -8,8 +8,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import TablePagination from '@mui/material/TablePagination'
-import SolvedButton from '../codeforces/buttons/solved/SolvedButton'
-import UnsolvedButton from '../codeforces/buttons/unsolved/UnsolvedButton'
+import SolvedButton from '../buttons/solved/SolvedButton'
+import UnsolvedButton from '../buttons/unsolved/UnsolvedButton'
 
 import Button from '@mui/material/Button'
 
