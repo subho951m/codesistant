@@ -22,8 +22,21 @@ const ContentOptions = (props: ContentOptionsProps) => {
           onClick={(event) => props.handleChangePlatform(event, 'codeforces')}
           sx={{
             backgroundColor:
-              props.activeButton === 'codeforces' ? 'red' : 'white',
+              props.activeButton === 'codeforces'
+                ? '#973c5e'
+                : 'rgba(224, 224, 224, 1)',
+            color:
+              props.activeButton === 'codeforces'
+                ? 'white'
+                : 'rgba(0, 0, 0, 0.87)',
             borderRadius: 0,
+            ':hover': {
+              bgcolor:
+                props.activeButton === 'codeforces'
+                  ? '#bd6d8b'
+                  : 'rgb(233 201 201)',
+              color: 'black',
+            },
           }}
           fullWidth
         >
@@ -36,8 +49,21 @@ const ContentOptions = (props: ContentOptionsProps) => {
           onClick={(event) => props.handleChangePlatform(event, 'leetcode')}
           sx={{
             backgroundColor:
-              props.activeButton === 'leetcode' ? 'red' : 'white',
+              props.activeButton === 'leetcode'
+                ? '#973c5e'
+                : 'rgba(224, 224, 224, 1)',
+            color:
+              props.activeButton === 'leetcode'
+                ? 'white'
+                : 'rgba(0, 0, 0, 0.87)',
             borderRadius: 0,
+            ':hover': {
+              bgcolor:
+                props.activeButton === 'leetcode'
+                  ? '#bd6d8b'
+                  : 'rgb(233 201 201)',
+              color: 'black',
+            },
           }}
           fullWidth
         >
@@ -49,8 +75,18 @@ const ContentOptions = (props: ContentOptionsProps) => {
           key={3}
           onClick={(event) => props.handleChangePlatform(event, 'gfg')}
           sx={{
-            backgroundColor: props.activeButton === 'gfg' ? 'red' : 'white',
+            backgroundColor:
+              props.activeButton === 'gfg'
+                ? '#973c5e'
+                : 'rgba(224, 224, 224, 1)',
+            color:
+              props.activeButton === 'gfg' ? 'white' : 'rgba(0, 0, 0, 0.87)',
             borderRadius: 0,
+            ':hover': {
+              bgcolor:
+                props.activeButton === 'gfg' ? '#bd6d8b' : 'rgb(233 201 201)',
+              color: 'black',
+            },
           }}
           fullWidth
         >

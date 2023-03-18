@@ -3,6 +3,7 @@ import '@fontsource/roboto'
 import './Codeforces.css'
 import Header from './header/Header'
 import Tasks from './tasks/Tasks'
+import Chart from './chart/Chart'
 
 const Codeforces = () => {
   return (
@@ -12,6 +13,9 @@ const Codeforces = () => {
       </div>
       <div className="today-task">
         <Tasks />
+      </div>
+      <div className="solved-chart">
+        <Chart />
       </div>
     </div>
   )
