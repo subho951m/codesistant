@@ -2,8 +2,8 @@ import React from 'react'
 import '@fontsource/roboto'
 import './Codeforces.css'
 import Header from './header/Header'
-import Tasks from './tasks/Tasks'
-import Chart from './chart/Chart'
+import Tasks from './body/Tasks'
+import Chart from '../customComponents/chart/Chart'
 
 const Codeforces = () => {
   return (
