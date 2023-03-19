@@ -1,7 +1,7 @@
 import React from 'react'
 import '@fontsource/roboto'
 import './Tasks.css'
-import Tables from '../../customComponents/tables/Tables'
+import Tables from '../../../../customComponents/tables/Tables'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
