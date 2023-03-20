@@ -6,8 +6,13 @@ import data from '../../../../../data'
 
 const Favourite = () => {
   return (
-    <div className="archive">
-      <Tables tableSize={2} data={data} showData={['name', 'tag']} />
+    <div className="favourite">
+      <Tables
+        tableSize={2}
+        data={data}
+        showData={['name', 'tag']}
+        heading="Favourite Problems"
+      />
     </div>
   )
 }

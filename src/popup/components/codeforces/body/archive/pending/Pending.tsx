@@ -6,11 +6,12 @@ import data from '../../../../../data'
 
 const Pending = () => {
   return (
-    <div className="archive">
+    <div className="pending">
       <Tables
         tableSize={2}
         data={data}
         showData={['name', 'tag', 'isFavourite']}
+        heading="Week's Pending"
       />
     </div>
   )

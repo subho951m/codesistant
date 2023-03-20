@@ -12,6 +12,7 @@ import SolvedButton from '../buttons/solved/SolvedButton'
 import UnsolvedButton from '../buttons/unsolved/UnsolvedButton'
 import Button from '@mui/material/Button'
 import { v4 as uuid } from 'uuid'
+import './Tables.css'
 
 const theme = createTheme({
   typography: {
@@ -41,6 +42,7 @@ const StyledTableRow = styled(TableRow, {
 
 type TablesProps = {
   tableSize: number
+  heading: string
   data: {
     name: string
     tag: string
@@ -81,124 +83,137 @@ const Tables = (props: TablesProps) => {
   }
 
   return (
-    <Paper sx={{ width: '100%', mb: 2 }}>
-      <TableContainer
-        sx={{
-          height: tableHeight(props.tableSize),
-          '&::-webkit-scrollbar': {
-            width: '5px',
-            height: '7px',
-          },
-          '&::-webkit-scrollbar-track': {
-            backgroundColor: 'rgba(224, 224, 224, 1)',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'rgb(193 23 47 / 38%)',
-            borderRadius: '3px',
-          },
-        }}
-      >
-        <Table size="small" aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              {props.showData.length === 1 ? (
-                <StyledTableCell key={uuid()} align="center">
-                  {props.showData[0]}
-                </StyledTableCell>
-              ) : (
-                [
-                  <StyledTableCell key={uuid()} align="left">
-                    {props.showData[0]}
-                  </StyledTableCell>,
-                  ,
-                  ...props.showData.slice(1).map((element) => (
-                    <StyledTableCell key={uuid()} align="right">
-                      {element}
+    <div className="my-table-codesistant">
+      <div className="my-table-codesistant-heading">{props.heading}</div>
+      <div className="my-table-codesistant-content">
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          <TableContainer
+            sx={{
+              height: tableHeight(props.tableSize),
+              '&::-webkit-scrollbar': {
+                width: '5px',
+                height: '7px',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: 'rgba(224, 224, 224, 1)',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'rgb(193 23 47 / 38%)',
+                borderRadius: '3px',
+              },
+            }}
+          >
+            <Table size="small" aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  {props.showData.length === 1 ? (
+                    <StyledTableCell key={uuid()} align="center">
+                      {props.showData[0]}
                     </StyledTableCell>
-                  )),
-                ]
-              )}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.showData.includes('isSolved')
-              ? props.data
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) =>
-                    row.isSolved ? (
-                      <StyledTableRow key={uuid()} selected>
-                        <StyledTableCell component="th" scope="row">
-                          <Button
-                            sx={{ fontSize: '11px', padding: 0, margin: 0 }}
-                          >
-                            {row.name}
-                          </Button>
+                  ) : (
+                    [
+                      <StyledTableCell key={uuid()} align="left">
+                        {props.showData[0]}
+                      </StyledTableCell>,
+                      ,
+                      ...props.showData.slice(1).map((element) => (
+                        <StyledTableCell key={uuid()} align="right">
+                          {element}
                         </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {row.tag}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          <SolvedButton />
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          isFavourite
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    ) : (
-                      <StyledTableRow key={uuid()}>
-                        <StyledTableCell component="th" scope="row">
-                          <Button
-                            sx={{ fontSize: '11px', padding: 0, margin: 0 }}
-                          >
-                            {row.name}
-                          </Button>
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {row.tag}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          <UnsolvedButton />
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          isFavourite
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    )
-                  )
-              : props.data
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <StyledTableRow key={uuid()}>
-                      <StyledTableCell component="th" scope="row">
-                        <Button
-                          sx={{ fontSize: '11px', padding: 0, margin: 0 }}
-                        >
-                          {row.name}
-                        </Button>
-                      </StyledTableCell>
-                      <StyledTableCell align="right">{row.tag}</StyledTableCell>
-                      {props.showData.includes('isFavourite') ? (
-                        <StyledTableCell align="right">
-                          isFavourite
-                        </StyledTableCell>
-                      ) : null}
-                    </StyledTableRow>
-                  ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <ThemeProvider theme={theme}>
-        <TablePagination
-          rowsPerPageOptions={[3, 6, 9]}
-          component="div"
-          count={props.data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </ThemeProvider>
-    </Paper>
+                      )),
+                    ]
+                  )}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {props.showData.includes('isSolved')
+                  ? props.data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row) =>
+                        row.isSolved ? (
+                          <StyledTableRow key={uuid()} selected>
+                            <StyledTableCell component="th" scope="row">
+                              <Button
+                                sx={{ fontSize: '11px', padding: 0, margin: 0 }}
+                              >
+                                {row.name}
+                              </Button>
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              {row.tag}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              <SolvedButton />
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              isFavourite
+                            </StyledTableCell>
+                          </StyledTableRow>
+                        ) : (
+                          <StyledTableRow key={uuid()}>
+                            <StyledTableCell component="th" scope="row">
+                              <Button
+                                sx={{ fontSize: '11px', padding: 0, margin: 0 }}
+                              >
+                                {row.name}
+                              </Button>
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              {row.tag}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              <UnsolvedButton />
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              isFavourite
+                            </StyledTableCell>
+                          </StyledTableRow>
+                        )
+                      )
+                  : props.data
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row) => (
+                        <StyledTableRow key={uuid()}>
+                          <StyledTableCell component="th" scope="row">
+                            <Button
+                              sx={{ fontSize: '11px', padding: 0, margin: 0 }}
+                            >
+                              {row.name}
+                            </Button>
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {row.tag}
+                          </StyledTableCell>
+                          {props.showData.includes('isFavourite') ? (
+                            <StyledTableCell align="right">
+                              isFavourite
+                            </StyledTableCell>
+                          ) : null}
+                        </StyledTableRow>
+                      ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <ThemeProvider theme={theme}>
+            <TablePagination
+              rowsPerPageOptions={[3, 6, 9]}
+              component="div"
+              count={props.data.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </ThemeProvider>
+        </Paper>
+      </div>
+    </div>
   )
 }
 

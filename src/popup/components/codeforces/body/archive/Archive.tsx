@@ -7,9 +7,12 @@ import Pending from './pending/Pending'
 const Archive = () => {
   return (
     <div className="archive">
-      <div className="codeforces-problems-pending"></div>
-      <Favourite />
-      <Pending />
+      <div className="codeforces-problems-pending">
+        <Pending />
+      </div>
+      <div className="codeforces-problems-favourite">
+        <Favourite />
+      </div>
     </div>
   )
 }
