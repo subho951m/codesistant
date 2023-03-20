@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import SettingsIcon from '@mui/icons-material/Settings'
 import Button from '@mui/material/Button'
+import data from '../../../../../data'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -43,7 +44,11 @@ const Tasks = () => {
         </Box>
       </div>
       <div className="codeforces-problems">
-        <Tables />
+        <Tables
+          tableSize={3}
+          data={data}
+          showData={['name', 'tag', 'isSolved', 'isFavourite']}
+        />
       </div>
     </div>
   )
