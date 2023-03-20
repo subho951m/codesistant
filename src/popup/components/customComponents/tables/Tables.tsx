@@ -100,6 +100,9 @@ const Tables = (props: TablesProps) => {
               '&::-webkit-scrollbar-thumb': {
                 backgroundColor: 'rgb(193 23 47 / 38%)',
                 borderRadius: '3px',
+                '&:hover': {
+                  backgroundColor: 'rgb(13 15 86 / 54%)',
+                },
               },
             }}
           >
