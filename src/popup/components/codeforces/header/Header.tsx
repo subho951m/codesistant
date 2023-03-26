@@ -16,7 +16,11 @@ const Item = styled(Paper)(({ theme }) => ({
   fontSize: 11,
 }))
 
-const Header = () => {
+type HeaderProps = {
+  solved: number
+}
+
+const Header = (props: HeaderProps) => {
   // const [isHover, setIsHover] = useState(false)
   // const handleClick = () => {
   //   console.log('Profile Clicked')
@@ -40,7 +44,7 @@ const Header = () => {
           </div>
         </Grid>
         <Grid item xs={3.5}>
-          <Item>Solved: 1000</Item>
+          <Item>Solved: {props.solved}</Item>
         </Grid>
       </Grid>
     </Box>

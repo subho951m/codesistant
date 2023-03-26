@@ -12,9 +12,9 @@ const Signin = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      codeforcesHandle: data.get('codeforcesHandle'),
-    })
+    const CFHandle = data.get('codeforcesHandle')
+    console.log(CFHandle)
+    chrome.storage.sync.set({ codeforcesHandle: CFHandle })
   }
 
   return (
