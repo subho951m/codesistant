@@ -47,7 +47,6 @@ const problemDataExtractor = (
   isWeekContinuedFetch,
   toBeFetchedProblemSetCount,
   currentDate,
-  // setIsExtractingProblems,
   setContextProblemsCF,
   setContextStatusCF,
   setShouldDisplayData
@@ -62,8 +61,7 @@ const problemDataExtractor = (
             isValidProblem(problem, settings.methodCF[i])
           )
         }
-        // now make a batch of random
-
+        // now make a batch of random problems
         const problemBatch = Array.from(
           Array(toBeFetchedProblemSetCount),
           () => new Array(problemSetArray.length)
@@ -82,6 +80,7 @@ const problemDataExtractor = (
             }
           }
         }
+
         // immplement logic for checking if a problem does not exist in any of storage -> daily, week, favourite, solved
         // if (settings.dailyCF.length > 0 || settings.weekCF.length > 0) {
         // }
@@ -135,7 +134,6 @@ const problemDataExtractor = (
         setContextStatusCF,
         setShouldDisplayData
       )
-      // setIsExtractingProblems(false)
     }
   )
 

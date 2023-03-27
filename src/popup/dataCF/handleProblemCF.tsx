@@ -18,7 +18,6 @@ const countDays = (date1, date2) => {
 const handleProblemsCF = (
   currentDate,
   setIsLoggedInCodeforces,
-  setToBeFetchedProblemSetCount,
   setIsGettingStorageAPI,
   setProblemsCF,
   setUserStatusCF,
@@ -28,59 +27,49 @@ const handleProblemsCF = (
 ) => {
   chrome.storage.sync.get(['codeforcesHandle'], function (handle) {
     console.log('Point 1')
-    let haveHandle = false
-    let toBeFetch = 0
+    let makeProblemSetCount = 0
     if (handle.codeforcesHandle) {
       setIsLoggedInCodeforces(true)
-      haveHandle = true
       console.log('Logged into codeforces')
       chrome.storage.sync.get(['lastFetchedProblemsDate'], function (problems) {
         if (problems.lastFetchedProblemsDate) {
-          const dateYYY = new Date(problems.lastFetchedProblemsDate)
+          // lastFetched found
+          const lastFetchedProblemsDate = new Date(
+            problems.lastFetchedProblemsDate
+          )
           console.log('Point 2')
           console.log('Current date', currentDate)
-          console.log('dateYYY', dateYYY)
-          console.log('dateYYY type', typeof dateYYY)
-          // lastFetched found 3
+          console.log('lastFetchedProblemsDate', lastFetchedProblemsDate)
+          console.log(
+            'lastFetchedProblemsDate type',
+            typeof lastFetchedProblemsDate
+          )
 
-          if (dateYYY.getTime() !== currentDate.getTime()) {
-            // point 5
+          if (lastFetchedProblemsDate.getTime() !== currentDate.getTime()) {
             chrome.storage.sync.get(
               ['codesistantInstalledDate'],
               function (installed) {
                 console.log('Point 3')
-                console.log('DateYYY', dateYYY)
+                console.log('lastFetchedProblemsDate', lastFetchedProblemsDate)
                 if (installed.codesistantInstalledDate) {
                   let weekStartDate = getFirstDayOfWeek(currentDate)
-
                   if (weekStartDate < installed.codesistantInstalledDate) {
-                    // point 7
                     weekStartDate = installed.codesistantInstalledDate
-                    toBeFetch = countDays(currentDate, weekStartDate)
-
-                    setToBeFetchedProblemSetCount(
-                      countDays(currentDate, weekStartDate)
-                    )
+                    makeProblemSetCount = countDays(currentDate, weekStartDate)
                   } else {
-                    // point 8
-                    if (dateYYY < weekStartDate) {
-                      // point 9
-                      toBeFetch = countDays(currentDate, weekStartDate) + 1
-
-                      setToBeFetchedProblemSetCount(
+                    if (lastFetchedProblemsDate < weekStartDate) {
+                      makeProblemSetCount =
                         countDays(currentDate, weekStartDate) + 1
-                      )
                     } else {
-                      // point 10
-                      toBeFetch = countDays(currentDate, dateYYY)
-                      setToBeFetchedProblemSetCount(
-                        countDays(currentDate, dateYYY)
+                      makeProblemSetCount = countDays(
+                        currentDate,
+                        lastFetchedProblemsDate
                       )
                     }
                   }
                   fetchDataCF(
                     true,
-                    toBeFetch,
+                    makeProblemSetCount,
                     currentDate,
                     setProblemsCF,
                     setUserStatusCF,
@@ -94,7 +83,7 @@ const handleProblemsCF = (
               }
             )
           } else {
-            // last fetch = cur date 6
+            // last fetch = cur date
             // no fetching
             console.log('No fetching so Setcontext called from handle Problem')
             setContextCF(
@@ -104,7 +93,7 @@ const handleProblemsCF = (
             )
           }
         } else {
-          // last fetched not found 4
+          // last fetched not
           chrome.storage.sync.get(
             ['codesistantInstalledDate'],
             function (installed) {
@@ -114,20 +103,14 @@ const handleProblemsCF = (
               const dateXX = new Date(installed.codesistantInstalledDate)
               console.log('Install date', dateXX)
               if (weekStartDate.getTime() < dateXX.getTime()) {
-                // point 11
                 console.log('Week start date inside', weekStartDate)
                 weekStartDate = dateXX
-              } else {
-                // point 12
               }
               console.log(weekStartDate)
-              toBeFetch = countDays(currentDate, weekStartDate) + 1
-              setToBeFetchedProblemSetCount(
-                countDays(currentDate, weekStartDate) + 1
-              )
+              makeProblemSetCount = countDays(currentDate, weekStartDate) + 1
               fetchDataCF(
                 true,
-                toBeFetch,
+                makeProblemSetCount,
                 currentDate,
                 setProblemsCF,
                 setUserStatusCF,
@@ -141,8 +124,6 @@ const handleProblemsCF = (
       })
     }
 
-    setIsLoggedInCodeforces(haveHandle)
-    setToBeFetchedProblemSetCount(toBeFetch)
     setIsGettingStorageAPI(false)
   })
 }
