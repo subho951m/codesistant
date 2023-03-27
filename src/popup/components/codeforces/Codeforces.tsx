@@ -9,8 +9,9 @@ import Signin from './signin/Signin'
 // import problemDataExtractor from '../../problemDataExtractor'
 // import statusDataExtractor from '../../statusDataExtractor'
 // import axios from 'axios'
-import shouldFetchProblems from '../../shouldFetchProblems'
-import problemDataExtractor from '../../problemDataExtractor'
+// import shouldFetchProblems from '../../shouldFetchProblems'
+// import problemDataExtractor from '../../dataCF/problemDataExtractor'
+import handleProblemsCF from '../../dataCF/handleProblemCF'
 // import fetchData from '../../fetchDataCF'
 // import { element } from 'prop-types'
 
@@ -44,7 +45,7 @@ const Codeforces = () => {
   const [isGettingStorageAPI, setIsGettingStorageAPI] = useState(true)
   const [toBeFetchedProblemSetCount, setToBeFetchedProblemSetCount] =
     useState(0)
-  const [isWeekContinuedFetch, setIsWeekContinuedFetch] = useState(false)
+  // const [isWeekContinuedFetch, setIsWeekContinuedFetch] = useState(false)
   const [problemsCF, setProblemsCF] = useState({
     isLoading: false,
     data: [],
@@ -56,7 +57,7 @@ const Codeforces = () => {
     error: '',
   })
 
-  const [isExtractingProblems, setIsExtractingProblems] = useState(false)
+  // const [isExtractingProblems, setIsExtractingProblems] = useState(false)
 
   const [shouldDisplayData, setShouldDisplayData] = useState(false)
 
@@ -71,62 +72,78 @@ const Codeforces = () => {
   )
 
   useEffect(() => {
-    shouldFetchProblems(
+    console.log('Should fetch problem')
+    handleProblemsCF(
       currentDate,
       setIsLoggedInCodeforces,
       setToBeFetchedProblemSetCount,
-      setIsWeekContinuedFetch,
       setIsGettingStorageAPI,
       setProblemsCF,
-      setUserStatusCF
+      setUserStatusCF,
+      setContextProblemsCF,
+      setContextStatusCF,
+      setShouldDisplayData
     )
-
-    if (
-      !isGettingStorageAPI &&
-      isLoggedInCodeforces &&
-      !problemsCF.isLoading &&
-      !userStatusCF.isLoading
-    ) {
-      if (toBeFetchedProblemSetCount !== 0) {
-        setIsExtractingProblems(true)
-        problemDataExtractor(
-          problemsCF.data,
-          isWeekContinuedFetch,
-          toBeFetchedProblemSetCount,
-          currentDate,
-          setIsExtractingProblems
-        )
-      }
-
-      if (!isExtractingProblems) {
-        // display data
-        chrome.storage.sync.get(
-          ['methodCF', 'weekCF', 'favouriteCF', 'dailyCF', 'solvedCF'],
-          function (dataCF) {
-            setContextProblemsCF((element) => ({
-              ...element,
-              methodCF: dataCF.methodCF,
-              weekCF: dataCF.weekCF,
-              favouriteCF: dataCF.favouriteCF,
-              dailyCF: dataCF.dailyCF,
-              solvedCF: dataCF.solvedCF,
-            }))
-            setContextStatusCF((element) => ({
-              ...element,
-              methodCF: dataCF.methodCF,
-              weekCF: dataCF.weekCF,
-              favouriteCF: dataCF.favouriteCF,
-              dailyCF: dataCF.dailyCF,
-              solvedCF: dataCF.solvedCF,
-            }))
-            // console.log(dataCF.methodCF)
-            setShouldDisplayData(true)
-            // now it is correct time to display data
-          }
-        )
-      }
-    }
   }, [])
+
+  // useEffect(() => {
+  //   if (
+  //     !isGettingStorageAPI &&
+  //     isLoggedInCodeforces &&
+  //     !problemsCF.isLoading &&
+  //     !userStatusCF.isLoading
+  //   ) {
+  //     console.log('Inside 2nd useeffect')
+  //     if (toBeFetchedProblemSetCount !== 0) {
+  //       setIsExtractingProblems(true)
+  //       console.log('Problem data extractor')
+  //       problemDataExtractor(
+  //         problemsCF.data,
+  //         isWeekContinuedFetch,
+  //         toBeFetchedProblemSetCount,
+  //         currentDate,
+  //         setIsExtractingProblems
+  //       )
+  //     }
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   if (
+  //     !isGettingStorageAPI &&
+  //     isLoggedInCodeforces &&
+  //     !problemsCF.isLoading &&
+  //     !userStatusCF.isLoading &&
+  //     !isExtractingProblems
+  //   ) {
+  //     // display data
+  //     chrome.storage.sync.get(
+  //       ['methodCF', 'weekCF', 'favouriteCF', 'dailyCF', 'solvedCF'],
+  //       function (dataCF) {
+  //         setContextProblemsCF((element) => ({
+  //           ...element,
+  //           methodCF: dataCF.methodCF,
+  //           weekCF: dataCF.weekCF,
+  //           favouriteCF: dataCF.favouriteCF,
+  //           dailyCF: dataCF.dailyCF,
+  //           solvedCF: dataCF.solvedCF,
+  //         }))
+  //         setContextStatusCF((element) => ({
+  //           ...element,
+  //           methodCF: dataCF.methodCF,
+  //           weekCF: dataCF.weekCF,
+  //           favouriteCF: dataCF.favouriteCF,
+  //           dailyCF: dataCF.dailyCF,
+  //           solvedCF: dataCF.solvedCF,
+  //         }))
+  //         // console.log(dataCF.methodCF)
+  //         setShouldDisplayData(true)
+  //         console.log('Now time to display data')
+  //         // now it is correct time to display data
+  //       }
+  //     )
+  //   }
+  // }, [])
 
   // write logic for setIsWeekContinuedFetch
 
@@ -140,24 +157,87 @@ const Codeforces = () => {
         </div>
       )
     } else {
-      if (problemsCF.isLoading || userStatusCF.isLoading) {
-        return <div className="loading">Loading...Problems...</div>
-      } else {
-        if (shouldDisplayData) {
-          return <div className="loading">Loading..Context...</div>
-        } else {
-          return (
-            <ProblemsetContext.Provider value={contextProblemsCF}>
-              <UserStatusContext.Provider value={contextStatusCF}>
-                <div className="codeforces">
-                  Boom Codeforces...
-                  <div className="welcome">Welcome...</div>
-                </div>
-              </UserStatusContext.Provider>
-            </ProblemsetContext.Provider>
-          )
-        }
+      if (shouldDisplayData) {
+        console.log('Display data')
+        console.log('contextproblem', contextProblemsCF)
+        console.log('status context', contextStatusCF)
+        console.log(
+          'Just for fun',
+          toBeFetchedProblemSetCount,
+          userStatusCF,
+          problemsCF
+        )
       }
+
+      //   if (problemsCF.isLoading || userStatusCF.isLoading) {
+      //     return <div className="loading">Loading...Problems...</div>
+      //   } else {
+
+      //     if (toBeFetchedProblemSetCount !== 0) {
+      //       setIsExtractingProblems(true)
+      //       console.log('Problem data extractor')
+      //       problemDataExtractor(
+      //         problemsCF.data,
+      //         isWeekContinuedFetch,
+      //         toBeFetchedProblemSetCount,
+      //         currentDate,
+      //         setIsExtractingProblems
+      //       )
+      //     }
+
+      //     if (
+      //   !isGettingStorageAPI &&
+      //   isLoggedInCodeforces &&
+      //   !problemsCF.isLoading &&
+      //   !userStatusCF.isLoading &&
+      //   !isExtractingProblems
+      // ) {
+      //   // display data
+      // chrome.storage.sync.get(
+      //   ['methodCF', 'weekCF', 'favouriteCF', 'dailyCF', 'solvedCF'],
+      //   function (dataCF) {
+      //     setContextProblemsCF((element) => ({
+      //       ...element,
+      //       methodCF: dataCF.methodCF,
+      //       weekCF: dataCF.weekCF,
+      //       favouriteCF: dataCF.favouriteCF,
+      //       dailyCF: dataCF.dailyCF,
+      //       solvedCF: dataCF.solvedCF,
+      //     }))
+      //     setContextStatusCF((element) => ({
+      //       ...element,
+      //       methodCF: dataCF.methodCF,
+      //       weekCF: dataCF.weekCF,
+      //       favouriteCF: dataCF.favouriteCF,
+      //       dailyCF: dataCF.dailyCF,
+      //       solvedCF: dataCF.solvedCF,
+      //     }))
+      //     // console.log(dataCF.methodCF)
+      //     setShouldDisplayData(true)
+      //     console.log('Now time to display data')
+      //     // now it is correct time to display data
+      //   }
+      // )
+      // }
+
+      //   if (!shouldDisplayData) {
+      //     return <div className="loading">Loading..Context...</div>
+      //   } else {
+      //     console.log(contextProblemsCF)
+      //     console.log(contextStatusCF)
+      //     console.log('Dislpaying data')
+      //     return (
+      //       <ProblemsetContext.Provider value={contextProblemsCF}>
+      //         <UserStatusContext.Provider value={contextStatusCF}>
+      //           <div className="codeforces">
+      //             Boom Codeforces...
+      //             <div className="welcome">Welcome...</div>
+      //           </div>
+      //         </UserStatusContext.Provider>
+      //       </ProblemsetContext.Provider>
+      //     )
+      //   }
+      // }
     }
   }
 }

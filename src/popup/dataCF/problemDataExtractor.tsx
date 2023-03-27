@@ -1,3 +1,5 @@
+import setContextCF from './setContextCF'
+
 function isValidProblem(problem, method) {
   if (method.ratingFrom !== 0 || method.ratingTo !== 9000) {
     if (
@@ -45,7 +47,10 @@ const problemDataExtractor = (
   isWeekContinuedFetch,
   toBeFetchedProblemSetCount,
   currentDate,
-  setIsExtractingProblems
+  // setIsExtractingProblems,
+  setContextProblemsCF,
+  setContextStatusCF,
+  setShouldDisplayData
 ) => {
   chrome.storage.sync.get(
     ['methodCF', 'weekCF', 'favouriteCF', 'dailyCF', 'solvedCF'],
@@ -124,7 +129,13 @@ const problemDataExtractor = (
       console.log('Problem 3', settings.favouriteCF)
       console.log('Problem 4', settings.dailyCF)
       console.log('Problem 5', settings.solvedCF)
-      setIsExtractingProblems(false)
+      console.log('set context from problem data extractor')
+      setContextCF(
+        setContextProblemsCF,
+        setContextStatusCF,
+        setShouldDisplayData
+      )
+      // setIsExtractingProblems(false)
     }
   )
 

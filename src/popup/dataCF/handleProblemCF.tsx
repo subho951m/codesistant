@@ -1,4 +1,5 @@
-import axios from 'axios'
+import fetchDataCF from './fetchDataCF'
+import setContextCF from './setContextCF'
 
 const getFirstDayOfWeek = (currentDate) => {
   const date = new Date(currentDate)
@@ -14,62 +15,17 @@ const countDays = (date1, date2) => {
   return Difference_In_Days
 }
 
-const shouldFetchProblems = (
+const handleProblemsCF = (
   currentDate,
   setIsLoggedInCodeforces,
   setToBeFetchedProblemSetCount,
-  setIsWeekContinuedFetch,
   setIsGettingStorageAPI,
   setProblemsCF,
-  setUserStatusCF
+  setUserStatusCF,
+  setContextProblemsCF,
+  setContextStatusCF,
+  setShouldDisplayData
 ) => {
-  const fetching = () => {
-    setProblemsCF((problemsCF) => ({ ...problemsCF, isLoading: true }))
-    setUserStatusCF((userStatusCF) => ({ ...userStatusCF, isLoading: true }))
-    axios
-      .get('https://codeforces.com/api/problemset.problems')
-      .then((response) => {
-        setProblemsCF((problemsCF) => ({
-          ...problemsCF,
-          isLoading: false,
-          data: response.data,
-        }))
-        console.log('Problems data fetched')
-      })
-      .catch((error) => {
-        setProblemsCF((problemsCF) => ({
-          ...problemsCF,
-          isLoading: false,
-          data: [],
-          error: 'Something went wrong',
-        }))
-        console.log(error)
-      })
-    axios
-      .get('https://codeforces.com/api/user.status?handle=lonewolf154')
-      .then((response) => {
-        setUserStatusCF((userStatusCF) => ({
-          ...userStatusCF,
-          isLoading: false,
-          data: response.data,
-        }))
-        console.log('status data fetched')
-      })
-      .catch((error) => {
-        setUserStatusCF((userStatusCF) => ({
-          ...userStatusCF,
-          isLoading: false,
-          data: [],
-          error: 'Something went wrong',
-        }))
-        console.log(error)
-      })
-
-    chrome.storage.sync.set({
-      lastFetchedProblemsDate: currentDate.toString(),
-    })
-  }
-
   chrome.storage.sync.get(['codeforcesHandle'], function (handle) {
     console.log('Point 1')
     let haveHandle = false
@@ -122,7 +78,16 @@ const shouldFetchProblems = (
                       )
                     }
                   }
-                  fetching()
+                  fetchDataCF(
+                    true,
+                    toBeFetch,
+                    currentDate,
+                    setProblemsCF,
+                    setUserStatusCF,
+                    setContextProblemsCF,
+                    setContextStatusCF,
+                    setShouldDisplayData
+                  )
                 } else {
                   // run time error
                 }
@@ -131,6 +96,12 @@ const shouldFetchProblems = (
           } else {
             // last fetch = cur date 6
             // no fetching
+            console.log('No fetching so Setcontext called from handle Problem')
+            setContextCF(
+              setContextProblemsCF,
+              setContextStatusCF,
+              setShouldDisplayData
+            )
           }
         } else {
           // last fetched not found 4
@@ -154,7 +125,16 @@ const shouldFetchProblems = (
               setToBeFetchedProblemSetCount(
                 countDays(currentDate, weekStartDate) + 1
               )
-              fetching()
+              fetchDataCF(
+                true,
+                toBeFetch,
+                currentDate,
+                setProblemsCF,
+                setUserStatusCF,
+                setContextProblemsCF,
+                setContextStatusCF,
+                setShouldDisplayData
+              )
             }
           )
         }
@@ -167,6 +147,6 @@ const shouldFetchProblems = (
   })
 }
 
-export default shouldFetchProblems
+export default handleProblemsCF
 
 // write logic for setIsWeekContinuedFetch

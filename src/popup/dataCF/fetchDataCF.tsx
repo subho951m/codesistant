@@ -1,12 +1,16 @@
 import axios from 'axios'
+import problemDataExtractor from './problemDataExtractor'
 
-const fetchData = (setProblemsCF, setUserStatusCF) => {
-  const currentTimeStamp = new Date()
-  const currentDate = new Date(
-    currentTimeStamp.getFullYear(),
-    currentTimeStamp.getMonth(),
-    currentTimeStamp.getDate()
-  )
+const fetchDataCF = (
+  isWeekContinuedFetch,
+  toBeFetchedProblemSetCount,
+  currentDate,
+  setProblemsCF,
+  setUserStatusCF,
+  setContextProblemsCF,
+  setContextStatusCF,
+  setShouldDisplayData
+) => {
   setProblemsCF((problemsCF) => ({ ...problemsCF, isLoading: true }))
   setUserStatusCF((userStatusCF) => ({ ...userStatusCF, isLoading: true }))
   axios
@@ -17,6 +21,15 @@ const fetchData = (setProblemsCF, setUserStatusCF) => {
         isLoading: false,
         data: response.data,
       }))
+      problemDataExtractor(
+        response.data,
+        isWeekContinuedFetch,
+        toBeFetchedProblemSetCount,
+        currentDate,
+        setContextProblemsCF,
+        setContextStatusCF,
+        setShouldDisplayData
+      )
       console.log('Problems data fetched')
     })
     .catch((error) => {
@@ -36,7 +49,7 @@ const fetchData = (setProblemsCF, setUserStatusCF) => {
         isLoading: false,
         data: response.data,
       }))
-      console.log('Problems data fetched')
+      console.log('status data fetched')
     })
     .catch((error) => {
       setUserStatusCF((userStatusCF) => ({
@@ -48,6 +61,9 @@ const fetchData = (setProblemsCF, setUserStatusCF) => {
       console.log(error)
     })
 
-  chrome.storage.sync.set({ lastFetchedProblemsDate: currentDate.toString() })
+  chrome.storage.sync.set({
+    lastFetchedProblemsDate: currentDate.toString(),
+  })
 }
-export default fetchData
+
+export default fetchDataCF
