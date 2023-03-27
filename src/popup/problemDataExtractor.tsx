@@ -12,7 +12,7 @@ function isValidProblem(problem, method) {
   }
   let ans = true
   method.tags.forEach((element) => {
-    ans = ans && problem.tags.include(element)
+    ans = ans && problem.tags.includes(element)
   })
   return ans
 }
@@ -44,7 +44,8 @@ const problemDataExtractor = (
   data,
   isWeekContinuedFetch,
   toBeFetchedProblemSetCount,
-  currentDate
+  currentDate,
+  setIsExtractingProblems
 ) => {
   chrome.storage.sync.get(
     ['methodCF', 'weekCF', 'favouriteCF', 'dailyCF', 'solvedCF'],
@@ -57,18 +58,23 @@ const problemDataExtractor = (
           )
         }
         // now make a batch of random
-        const problemBatch = new Array(toBeFetchedProblemSetCount)
+
+        const problemBatch = Array.from(
+          Array(toBeFetchedProblemSetCount),
+          () => new Array(problemSetArray.length)
+        )
         for (let i = 0; i < problemSetArray.length; i++) {
           const arrayIndexs = generateUniqueRandomNumbers(
             toBeFetchedProblemSetCount,
             0,
             problemSetArray[i].length - 1
           )
+          problemBatch[i] = new Array(toBeFetchedProblemSetCount)
           for (let j = 0; j < toBeFetchedProblemSetCount; j++) {
-            problemBatch[j].push({
+            problemBatch[j][i] = {
               problem: problemSetArray[i][arrayIndexs[j]],
               fetchTag: settings.methodCF[i],
-            })
+            }
           }
         }
         // immplement logic for checking if a problem does not exist in any of storage -> daily, week, favourite, solved
@@ -93,6 +99,7 @@ const problemDataExtractor = (
             const newWeekCF = problemBatch.slice(1)
             unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
           }
+
           chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
           chrome.storage.sync.set({ dailyCF: newDailyCF })
         } else {
@@ -104,11 +111,20 @@ const problemDataExtractor = (
           }
           chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
         }
+        console.log('newDailyCF', newDailyCF)
+        console.log('unsolvedMergeWeekCF', unsolvedMergeWeekCF)
       } else {
         // method is not set
         // make user go to setting page
         console.log('Not logged into Codeforces')
       }
+
+      console.log('Problem 1', settings.methodCF)
+      console.log('Problem 2', settings.weekCF)
+      console.log('Problem 3', settings.favouriteCF)
+      console.log('Problem 4', settings.dailyCF)
+      console.log('Problem 5', settings.solvedCF)
+      setIsExtractingProblems(false)
     }
   )
 

@@ -12,25 +12,11 @@ chrome.runtime.onInstalled.addListener(() => {
     ],
   })
   chrome.storage.sync.set({
-    weekCF: [
-      {
-        name: 'Prediction',
-        contestId: 1809,
-        index: 'G',
-        tags: ['combinatorics', 'data structures', 'dp'],
-      },
-    ],
+    weekCF: [],
   })
   chrome.storage.sync.set({ favouriteCF: [] })
   chrome.storage.sync.set({
-    dailyCF: [
-      {
-        name: 'Predator',
-        contestId: 1709,
-        index: 'A',
-        tags: ['data structures', 'dp'],
-      },
-    ],
+    dailyCF: [],
   })
   chrome.storage.sync.set({ solvedCF: [] })
   // chrome.storage.sync.set({ codesistantInstalledDate: new Date() })
