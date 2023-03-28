@@ -1,0 +1,5 @@
+solved = [{name: , contestId: , index: , rating: }]
+methodCF = [{ratingFrom: , ratingTo: , tags: ['strings']}]
+dailyCF = [{name: , contestId: , index: , fetchTag: {ratingFrom: , ratingTo: , tags: ['strings']}}]
+favouriteCF = []
+weekCF = []

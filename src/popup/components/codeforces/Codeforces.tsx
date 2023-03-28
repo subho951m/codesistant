@@ -20,15 +20,12 @@ const defaultProblemsCF = {
   weekCF: [],
   favouriteCF: [],
   dailyCF: [],
-  solvedCF: [], //it can be a map
+  solvedCF: [],
 }
 
 const defaultStatusCF = {
-  methodCF: [],
-  weekCF: [],
-  favouriteCF: [],
-  dailyCF: [],
-  solvedCF: [], //it can be a map
+  totalSolved: 0,
+  userStatus: [],
 }
 
 export const ProblemsetContext = React.createContext(defaultProblemsCF)
@@ -54,7 +51,10 @@ const Codeforces = () => {
     error: '',
   })
 
-  const [shouldDisplayData, setShouldDisplayData] = useState(false)
+  const [shouldDisplayData, setShouldDisplayData] = useState({
+    problems: false,
+    userStatus: false,
+  })
 
   const [contextProblemsCF, setContextProblemsCF] = useState(defaultProblemsCF)
   const [contextStatusCF, setContextStatusCF] = useState(defaultStatusCF)
@@ -78,6 +78,7 @@ const Codeforces = () => {
       setContextStatusCF,
       setShouldDisplayData
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (isGettingStorageAPI) {
@@ -90,7 +91,7 @@ const Codeforces = () => {
         </div>
       )
     } else {
-      if (shouldDisplayData) {
+      if (shouldDisplayData.problems && shouldDisplayData.userStatus) {
         console.log('Display data')
         console.log('contextproblem', contextProblemsCF)
         console.log('status context', contextStatusCF)

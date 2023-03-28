@@ -1,5 +1,6 @@
-import fetchDataCF from './fetchDataCF'
-import setContextCF from './setContextCF'
+import fetchProblemsCF from './fetchProblemsCF'
+import contextProblems from './contextProblems'
+import fetchUserStatusCF from './fetchUserStatusCF'
 
 const getFirstDayOfWeek = (currentDate) => {
   const date = new Date(currentDate)
@@ -31,6 +32,12 @@ const handleProblemsCF = (
     if (handle.codeforcesHandle) {
       setIsLoggedInCodeforces(true)
       console.log('Logged into codeforces')
+      // user status should get updated every time codeforces is rendered
+      fetchUserStatusCF(
+        setUserStatusCF,
+        setContextStatusCF,
+        setShouldDisplayData
+      )
       chrome.storage.sync.get(['lastFetchedProblemsDate'], function (problems) {
         if (problems.lastFetchedProblemsDate) {
           // lastFetched found
@@ -67,14 +74,12 @@ const handleProblemsCF = (
                       )
                     }
                   }
-                  fetchDataCF(
+                  fetchProblemsCF(
                     true,
                     makeProblemSetCount,
                     currentDate,
                     setProblemsCF,
-                    setUserStatusCF,
                     setContextProblemsCF,
-                    setContextStatusCF,
                     setShouldDisplayData
                   )
                 } else {
@@ -86,11 +91,7 @@ const handleProblemsCF = (
             // last fetch = cur date
             // no fetching
             console.log('No fetching so Setcontext called from handle Problem')
-            setContextCF(
-              setContextProblemsCF,
-              setContextStatusCF,
-              setShouldDisplayData
-            )
+            contextProblems(setContextProblemsCF, setShouldDisplayData)
           }
         } else {
           // last fetched not
@@ -108,14 +109,12 @@ const handleProblemsCF = (
               }
               console.log(weekStartDate)
               makeProblemSetCount = countDays(currentDate, weekStartDate) + 1
-              fetchDataCF(
+              fetchProblemsCF(
                 true,
                 makeProblemSetCount,
                 currentDate,
                 setProblemsCF,
-                setUserStatusCF,
                 setContextProblemsCF,
-                setContextStatusCF,
                 setShouldDisplayData
               )
             }

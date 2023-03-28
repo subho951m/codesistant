@@ -1,4 +1,4 @@
-import setContextCF from './setContextCF'
+import contextProblems from './contextProblems'
 
 function isValidProblem(problem, method) {
   if (method.ratingFrom !== 0 || method.ratingTo !== 9000) {
@@ -48,7 +48,7 @@ const problemDataExtractor = (
   toBeFetchedProblemSetCount,
   currentDate,
   setContextProblemsCF,
-  setContextStatusCF,
+  // setContextStatusCF,
   setShouldDisplayData
 ) => {
   chrome.storage.sync.get(
@@ -129,9 +129,9 @@ const problemDataExtractor = (
       console.log('Problem 4', settings.dailyCF)
       console.log('Problem 5', settings.solvedCF)
       console.log('set context from problem data extractor')
-      setContextCF(
+      contextProblems(
         setContextProblemsCF,
-        setContextStatusCF,
+        // setContextStatusCF,
         setShouldDisplayData
       )
     }

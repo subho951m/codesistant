@@ -1,37 +1,33 @@
-const statusDataExtractor = (userStatusCF) => {
-  //   const filteredProblems = data.result.filter(
-  //     (problem) => problem.verdict === 'OK'
-  //   )
-  //   const totalSolved = filteredProblems.length
-  //   const inf = 900000
-  //   let heighestRatingSolved = -inf
-  //   const solvedProblemsMap = new Map()
-  //   for (let i = 0; i < filteredProblems.length; i++) {
-  //     heighestRatingSolved = Math.max(
-  //       heighestRatingSolved,
-  //       filteredProblems[i].problem.rating
-  //     )
-  //     if (solvedProblemsMap.has(filteredProblems[i].problem.rating)) {
-  //       solvedProblemsMap.set(
-  //         filteredProblems[i].problem.rating,
-  //         solvedProblemsMap.get(filteredProblems[i].problem.rating) + 1
-  //       )
-  //     } else {
-  //       solvedProblemsMap.set(filteredProblems[i].problem.rating, 1)
-  //     }
-  //   }
-  //   const userStatus = []
-  //   if (heighestRatingSolved !== -inf) {
-  //     for (let i = 800; i <= heighestRatingSolved; i = i + 100) {
-  //       userStatus.push({
-  //         rating: i,
-  //         solved: solvedProblemsMap.has(i) ? solvedProblemsMap.get(i) : 0,
-  //       })
-  //     }
-  //   }
-  //   // The logic for finding total solved is wrong
-  //   return { userStatus, totalSolved }
-  console.log(userStatusCF)
+import contextUserStatus from './contextUserStatus'
+
+const statusDataExtractor = (
+  data,
+  setContextStatusCF,
+  setShouldDisplayData
+) => {
+  // set of distinct solved problems
+  const solvedProblemsCF = new Set()
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].verdict === 'OK') {
+      const obj = {
+        name: data[i].problem.name,
+        contestId: data[i].problem.contestId,
+        index: data[i].problem.index,
+      }
+      if ('rating' in data[i].problem) {
+        obj['rating'] = data[i].problem.rating
+      }
+      solvedProblemsCF.add(JSON.stringify(obj))
+    }
+  }
+
+  chrome.storage.sync.set(
+    { solvedCF: Array.from(solvedProblemsCF) },
+    function () {
+      contextUserStatus(setContextStatusCF, setShouldDisplayData)
+      console.log('Status Data Extractor solvedProblemsCF', solvedProblemsCF)
+    }
+  )
 }
 
 export default statusDataExtractor
