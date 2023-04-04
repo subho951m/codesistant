@@ -8,11 +8,11 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import TablePagination from '@mui/material/TablePagination'
-import SolvedButton from '../buttons/solved/SolvedButton'
-import UnsolvedButton from '../buttons/unsolved/UnsolvedButton'
-import Button from '@mui/material/Button'
 import { v4 as uuid } from 'uuid'
 import './Tables.css'
+import ModifiedEverydayCell from './modifiedCell/ModifiedEverydayCell'
+import ModifiedPendingCell from './modifiedCell/ModifiedPendingCell'
+import ModifiedFavouriteCell from './modifiedCell/ModifiedFavouriteCell'
 
 const theme = createTheme({
   typography: {
@@ -31,26 +31,24 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }))
 
-const StyledTableRow = styled(TableRow, {
-  shouldForwardProp: (prop) => prop !== 'selected',
-})(({ selected }) => ({
-  backgroundColor: selected ? 'rgb(190 237 200)' : '#fff',
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}))
+// const StyledTableRow = styled(TableRow, {
+//   shouldForwardProp: (prop) => prop !== 'selected',
+// })(({ selected }) => ({
+//   backgroundColor: selected ? 'rgb(190 237 200)' : '#fff',
+//   '&:last-child td, &:last-child th': {
+//     border: 0,
+//   },
+// }))
 
 type TablesProps = {
+  useFor: string
   tableSize: number
   heading: string
-  data: {
-    name: string
-    tag: string
-    isSolved: boolean
-    isFavourite: boolean
-    id: number
-  }[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
   showData: string[]
+  contextProblemsCF: any
+  setContextProblemsCF: any
 }
 
 const Tables = (props: TablesProps) => {
@@ -129,77 +127,41 @@ const Tables = (props: TablesProps) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.showData.includes('isSolved')
-                  ? props.data
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                      .map((row) =>
-                        row.isSolved ? (
-                          <StyledTableRow key={uuid()} selected>
-                            <StyledTableCell component="th" scope="row">
-                              <Button
-                                sx={{ fontSize: '11px', padding: 0, margin: 0 }}
-                              >
-                                {row.name}
-                              </Button>
-                            </StyledTableCell>
-                            <StyledTableCell align="right">
-                              {row.tag}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">
-                              <SolvedButton />
-                            </StyledTableCell>
-                            <StyledTableCell align="right">
-                              isFavourite
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        ) : (
-                          <StyledTableRow key={uuid()}>
-                            <StyledTableCell component="th" scope="row">
-                              <Button
-                                sx={{ fontSize: '11px', padding: 0, margin: 0 }}
-                              >
-                                {row.name}
-                              </Button>
-                            </StyledTableCell>
-                            <StyledTableCell align="right">
-                              {row.tag}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">
-                              <UnsolvedButton />
-                            </StyledTableCell>
-                            <StyledTableCell align="right">
-                              isFavourite
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        )
-                      )
-                  : props.data
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                      .map((row) => (
-                        <StyledTableRow key={uuid()}>
-                          <StyledTableCell component="th" scope="row">
-                            <Button
-                              sx={{ fontSize: '11px', padding: 0, margin: 0 }}
-                            >
-                              {row.name}
-                            </Button>
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {row.tag}
-                          </StyledTableCell>
-                          {props.showData.includes('isFavourite') ? (
-                            <StyledTableCell align="right">
-                              isFavourite
-                            </StyledTableCell>
-                          ) : null}
-                        </StyledTableRow>
-                      ))}
+                {props.data
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) =>
+                    props.useFor === 'Everyday' ? (
+                      <ModifiedEverydayCell
+                        key={uuid()}
+                        isSolved={row.isSolved}
+                        problem={row.problem}
+                        tags={row.tags}
+                        isFavourite={row.isFavourite}
+                        contextProblemsCF={props.contextProblemsCF}
+                        setContextProblemsCF={props.setContextProblemsCF}
+                      />
+                    ) : props.useFor === 'Pending' ? (
+                      <ModifiedPendingCell
+                        key={uuid()}
+                        problem={row.problem}
+                        tags={row.tags}
+                        isFavourite={row.isFavourite}
+                        contextProblemsCF={props.contextProblemsCF}
+                        setContextProblemsCF={props.setContextProblemsCF}
+                      />
+                    ) : props.useFor === 'Favourite' ? (
+                      <ModifiedFavouriteCell
+                        key={uuid()}
+                        problem={row.problem}
+                        tags={row.tags}
+                        contextProblemsCF={props.contextProblemsCF}
+                        setContextProblemsCF={props.setContextProblemsCF}
+                        setPage={setPage}
+                        rowsPerPage={rowsPerPage}
+                        dataLength={props.data.length}
+                      />
+                    ) : null
+                  )}
               </TableBody>
             </Table>
           </TableContainer>

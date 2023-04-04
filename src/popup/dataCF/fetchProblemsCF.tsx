@@ -1,4 +1,5 @@
 import axios from 'axios'
+import contextProblems from './contextProblems'
 import problemDataExtractor from './problemDataExtractor'
 
 const fetchProblemsCF = (
@@ -26,24 +27,41 @@ const fetchProblemsCF = (
         setContextProblemsCF,
         setShouldDisplayData
       )
+      chrome.storage.sync.set({
+        lastFetchedProblemsDate: currentDate.toString(),
+      })
       console.log('Problems data fetched')
     })
-    .catch((error) => {
+    .catch(function (error) {
       setProblemsCF((problemsCF) => ({
         ...problemsCF,
         isLoading: false,
-        data: [],
-        error: 'Something went wrong',
+        isError: true,
       }))
-      console.log(error)
-      // most important part
-      // if there is an error process with previous part
-      // constriction on storage set mechanism
+      let errorMessage = ''
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log('Point 1')
+        if (error.response.data.comment === undefined) {
+          errorMessage = 'Something went wrong'
+          console.log('Something went wrong')
+        } else {
+          errorMessage = error.response.data.comment
+          console.log(error.response.data.comment)
+        }
+      } else {
+        errorMessage = 'Something went wrong'
+        console.log('Point 2')
+        console.log('Something went wrong')
+      }
+      setProblemsCF((problemsCF) => ({
+        ...problemsCF,
+        error: errorMessage,
+      }))
+      contextProblems(setContextProblemsCF, setShouldDisplayData)
+      // implement constriction on storage set mechanism
     })
-
-  chrome.storage.sync.set({
-    lastFetchedProblemsDate: currentDate.toString(),
-  })
 }
 
 export default fetchProblemsCF

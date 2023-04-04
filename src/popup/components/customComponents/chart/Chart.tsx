@@ -3,10 +3,12 @@ import React from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
 
 type ChartProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any
 }
 
 const Chart = (props: ChartProps) => {
+  console.log('Chart is rendered')
   return (
     <BarChart
       width={350}
@@ -28,4 +30,4 @@ const Chart = (props: ChartProps) => {
   )
 }
 
-export default Chart
+export default React.memo(Chart)

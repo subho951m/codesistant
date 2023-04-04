@@ -1,5 +1,13 @@
 solved = [{name: , contestId: , index: , rating: }]
 methodCF = [{ratingFrom: , ratingTo: , tags: ['strings']}]
 dailyCF = [{name: , contestId: , index: , fetchTag: {ratingFrom: , ratingTo: , tags: ['strings']}}]
-favouriteCF = []
-weekCF = []
+favouriteCF = [{name: , contestId: , index: , fetchTag: {ratingFrom: , ratingTo: , tags: ['strings']}}]
+weekCF = [{name: , contestId: , index: , fetchTag: {ratingFrom: , ratingTo: , tags: ['strings']}}]
+
+favouriteCF
+problem
+: 
+{name: 'Bouncing Ball', contestId: 1415, index: 'C'}
+tags
+: 
+(2) ['dp', 'implementation']

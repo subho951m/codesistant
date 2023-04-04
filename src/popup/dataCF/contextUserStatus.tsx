@@ -5,7 +5,8 @@ const contextUserStatus = (setContextStatusCF, setShouldDisplayData) => {
       let heighestRatingSolved = -inf
       const solvedProblemsMap = new Map()
       for (let i = 0; i < dataCF.solvedCF.length; i++) {
-        const problem = JSON.parse(dataCF.solvedCF[i])
+        // const problem = JSON.parse(dataCF.solvedCF[i])
+        const problem = dataCF.solvedCF[i]
         if ('rating' in problem) {
           heighestRatingSolved = Math.max(heighestRatingSolved, problem.rating)
           if (solvedProblemsMap.has(problem.rating)) {

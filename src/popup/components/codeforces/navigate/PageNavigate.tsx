@@ -1,74 +1,45 @@
-import React from 'react'
-import '@fontsource/roboto'
-import './PageNavigate.css'
-import Button from '@mui/material/Button'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
-import Grid from '@mui/material/Grid'
+import * as React from 'react'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 type PageNavigateProps = {
-  handlePageChange: (page: number) => void
-  pageNumber: number
+  handlePageChange: (
+    event: React.MouseEvent<HTMLElement>,
+    newTitle: string | null
+  ) => void
+  pageTitle: string
 }
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  // padding: theme.spacing(0.4),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}))
 
 const PageNavigate = (props: PageNavigateProps) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={1}>
-        <Grid item xs={3}>
-          <Item>
-            <Button
-              key={1}
-              onClick={() => props.handlePageChange(1)}
-              disabled={props.pageNumber === 1}
-              sx={{
-                color: '#973c5e',
-                width: '70px',
-                height: '25px',
-              }}
-            >
-              <ArrowBackIcon />
-            </Button>
-          </Item>
-        </Grid>
-        <Grid item xs={6}>
-          <Item sx={{ padding: '3px' }}>
-            {props.pageNumber === 1
-              ? 'Current Problems'
-              : props.pageNumber === 2
-              ? 'Archived Problems'
-              : ''}
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-            <Button
-              key={2}
-              onClick={() => props.handlePageChange(2)}
-              disabled={props.pageNumber === 2}
-              sx={{
-                color: '#973c5e',
-                width: '70px',
-                height: '25px',
-              }}
-            >
-              <ArrowForwardIcon />
-            </Button>
-          </Item>
-        </Grid>
-      </Grid>
-    </Box>
+    <ToggleButtonGroup
+      value={props.pageTitle}
+      exclusive
+      onChange={props.handlePageChange}
+      aria-label="text alignment"
+    >
+      <ToggleButton
+        value="Everyday"
+        aria-label="left aligned"
+        sx={{ backgroundColor: 'white', height: '35px' }}
+      >
+        Everyday
+      </ToggleButton>
+      <ToggleButton
+        value="Pending"
+        aria-label="centered"
+        sx={{ backgroundColor: 'white', height: '35px' }}
+      >
+        Pending
+      </ToggleButton>
+      <ToggleButton
+        value="Favourite"
+        aria-label="right aligned"
+        sx={{ backgroundColor: 'white', height: '35px' }}
+      >
+        Favourite
+      </ToggleButton>
+    </ToggleButtonGroup>
   )
 }
 

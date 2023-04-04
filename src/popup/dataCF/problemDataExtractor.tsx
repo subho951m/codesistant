@@ -48,7 +48,6 @@ const problemDataExtractor = (
   toBeFetchedProblemSetCount,
   currentDate,
   setContextProblemsCF,
-  // setContextStatusCF,
   setShouldDisplayData
 ) => {
   chrome.storage.sync.get(
@@ -129,11 +128,7 @@ const problemDataExtractor = (
       console.log('Problem 4', settings.dailyCF)
       console.log('Problem 5', settings.solvedCF)
       console.log('set context from problem data extractor')
-      contextProblems(
-        setContextProblemsCF,
-        // setContextStatusCF,
-        setShouldDisplayData
-      )
+      contextProblems(setContextProblemsCF, setShouldDisplayData)
     }
   )
 
