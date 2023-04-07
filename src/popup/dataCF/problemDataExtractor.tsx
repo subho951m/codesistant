@@ -47,6 +47,7 @@ const problemDataExtractor = (
   isWeekContinuedFetch,
   toBeFetchedProblemSetCount,
   currentDate,
+  isNewMethodCFSetFetch,
   setContextProblemsCF,
   setShouldDisplayData
 ) => {
@@ -85,37 +86,43 @@ const problemDataExtractor = (
         // }
 
         const newDailyCF = problemBatch[0]
-        let unsolvedDaily = []
-        if (settings.dailyCF && settings.solvedCF) {
-          // find if problem not in solved problem list, then it is marked as unsolved
-          unsolvedDaily = settings.dailyCF.filter((problem) =>
-            isUnsolved(problem, settings.solvedCF)
-          )
-        }
-        let unsolvedMergeWeekCF = []
-        if (isWeekContinuedFetch) {
-          if (settings.weekCF) {
-            unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(settings.weekCF)
-          }
-          unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(unsolvedDaily)
-          if (toBeFetchedProblemSetCount > 1) {
-            const newWeekCF = problemBatch.slice(1)
-            unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
-          }
-
-          chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
+        if (isNewMethodCFSetFetch) {
+          // just update daily CF and nothing else
           chrome.storage.sync.set({ dailyCF: newDailyCF })
+          console.log(newDailyCF)
         } else {
-          chrome.storage.sync.set({ dailyCF: newDailyCF })
-          unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(unsolvedDaily)
-          if (toBeFetchedProblemSetCount > 1) {
-            const newWeekCF = problemBatch.slice(1)
-            unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
+          let unsolvedDaily = []
+          if (settings.dailyCF && settings.solvedCF) {
+            // find if problem not in solved problem list, then it is marked as unsolved
+            unsolvedDaily = settings.dailyCF.filter((problem) =>
+              isUnsolved(problem, settings.solvedCF)
+            )
           }
-          chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
+          let unsolvedMergeWeekCF = []
+          if (isWeekContinuedFetch) {
+            if (settings.weekCF) {
+              unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(settings.weekCF)
+            }
+            unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(unsolvedDaily)
+            if (toBeFetchedProblemSetCount > 1) {
+              const newWeekCF = problemBatch.slice(1)
+              unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
+            }
+
+            chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
+            chrome.storage.sync.set({ dailyCF: newDailyCF })
+          } else {
+            chrome.storage.sync.set({ dailyCF: newDailyCF })
+            unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(unsolvedDaily)
+            if (toBeFetchedProblemSetCount > 1) {
+              const newWeekCF = problemBatch.slice(1)
+              unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
+            }
+            chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
+          }
+          console.log('newDailyCF', newDailyCF)
+          console.log('unsolvedMergeWeekCF', unsolvedMergeWeekCF)
         }
-        console.log('newDailyCF', newDailyCF)
-        console.log('unsolvedMergeWeekCF', unsolvedMergeWeekCF)
       } else {
         // method is not set
         // make user go to setting page

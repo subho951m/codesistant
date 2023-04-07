@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import './MyModal.css'
 import Select from 'react-select'
 import TextField from '@mui/material/TextField'
-import tagsOptions from './data/TagsOptions'
+import tagsOptions from '../data/TagsOptions'
 
 const style = {
   // eslint-disable-next-line @typescript-eslint/prefer-as-const

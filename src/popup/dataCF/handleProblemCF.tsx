@@ -78,6 +78,7 @@ const handleProblemsCF = (
                     true,
                     makeProblemSetCount,
                     currentDate,
+                    false,
                     setProblemsCF,
                     setContextProblemsCF,
                     setShouldDisplayData
@@ -89,9 +90,28 @@ const handleProblemsCF = (
             )
           } else {
             // last fetch = cur date
-            // no fetching
-            console.log('No fetching so Setcontext called from handle Problem')
-            contextProblems(setContextProblemsCF, setShouldDisplayData)
+            // no fetching BUT check if method CF is set today
+            // then update daily CF
+            chrome.storage.sync.get('isNewMethodCFSet', function (CF) {
+              if (CF.isNewMethodCFSet && CF.isNewMethodCFSet === 'yes') {
+                // just fetch and change dailyCF according to methodCF
+                fetchProblemsCF(
+                  true,
+                  1,
+                  currentDate,
+                  true,
+                  setProblemsCF,
+                  setContextProblemsCF,
+                  setShouldDisplayData
+                )
+                chrome.storage.sync.set({ isNewMethodCFSet: 'no' })
+              } else {
+                console.log(
+                  'No fetching so Setcontext called from handle Problem'
+                )
+                contextProblems(setContextProblemsCF, setShouldDisplayData)
+              }
+            })
           }
         } else {
           // last fetched not
@@ -113,6 +133,7 @@ const handleProblemsCF = (
                 true,
                 makeProblemSetCount,
                 currentDate,
+                false,
                 setProblemsCF,
                 setContextProblemsCF,
                 setShouldDisplayData

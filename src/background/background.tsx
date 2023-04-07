@@ -82,10 +82,6 @@ chrome.runtime.onInstalled.addListener(() => {
     dailyCF: [],
   })
   chrome.storage.sync.set({ solvedCF: [] })
-  // chrome.storage.sync.set({ codesistantInstalledDate: new Date() })
-  // chrome.storage.sync.set({ codesistantInstalledDate: new Date() })
-  // chrome.storage.sync.set({ codesistantInstalledDate: new Date() })
-  // chrome.storage.sync.set({ codesistantInstalledDate: new Date() })
   console.log('Extension is Installed')
   chrome.storage.sync.get(['codesistantInstalledDate'], function (install) {
     if (install.codesistantInstalledDate) {

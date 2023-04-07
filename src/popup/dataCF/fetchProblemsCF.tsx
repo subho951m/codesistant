@@ -6,6 +6,7 @@ const fetchProblemsCF = (
   isWeekContinuedFetch,
   toBeFetchedProblemSetCount,
   currentDate,
+  isNewMethodCFSetFetch,
   setProblemsCF,
   setContextProblemsCF,
   setShouldDisplayData
@@ -24,6 +25,7 @@ const fetchProblemsCF = (
         isWeekContinuedFetch,
         toBeFetchedProblemSetCount,
         currentDate,
+        isNewMethodCFSetFetch,
         setContextProblemsCF,
         setShouldDisplayData
       )
