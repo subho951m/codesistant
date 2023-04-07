@@ -12,7 +12,7 @@ const handleDataSubmit = (data, setCloseThisTab) => {
     }
     newMethodCF.push(obj)
   }
-  console.log(newMethodCF)
+  //console.log(newMethodCF)
   chrome.storage.sync.set(
     { methodCF: newMethodCF, isNewMethodCFSet: 'yes' },
     function () {
@@ -21,7 +21,7 @@ const handleDataSubmit = (data, setCloseThisTab) => {
       setCloseThisTab(true)
       setTimeout(() => {
         window.close()
-      }, 3000)
+      }, 2000)
     }
   )
 }

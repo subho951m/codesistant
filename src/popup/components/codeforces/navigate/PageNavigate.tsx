@@ -17,6 +17,7 @@ const PageNavigate = (props: PageNavigateProps) => {
       exclusive
       onChange={props.handlePageChange}
       aria-label="text alignment"
+      sx={{ width: '100%', justifyContent: 'space-between' }}
     >
       <ToggleButton
         value="Everyday"

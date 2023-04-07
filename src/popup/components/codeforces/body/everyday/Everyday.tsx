@@ -10,15 +10,15 @@ const EveryDay = () => {
   // set chrome storage but manage to pass props through react logic
   // It is so because if everytime you get chrome storage and display favouriteCF, it will be very costly
 
-  console.log('EveryDay is rendered')
+  // console.log('EveryDay is rendered')
   const { contextProblemsCF, setContextProblemsCF } =
     useContext(ProblemsetContext)
 
   const daily = contextProblemsCF.dailyCF
-  console.log('Daily .....', daily)
+  // console.log('Daily .....', daily)
   const solved = contextProblemsCF.solvedCF
   const favourite = contextProblemsCF.favouriteCF
-  console.log('Favourite after re-render', favourite)
+  // console.log('Favourite after re-render', favourite)
   const data = []
   for (let i = 0; i < daily.length; i++) {
     let obj = {
@@ -27,7 +27,7 @@ const EveryDay = () => {
         contestId: daily[i].problem.contestId,
         index: daily[i].problem.index,
       },
-      tags: daily[i].fetchTag.tags,
+      tags: daily[i].fetchTag,
       isSolved: false,
       isFavourite: false,
     }
@@ -56,7 +56,7 @@ const EveryDay = () => {
   }
 
   const contextStatusCF = useContext(UserStatusContext)
-  // const handleClick = useCallback(() => {}, [])
+
   return (
     <div className="everyday">
       <div className="codeforces-everyday-tasks">
@@ -64,7 +64,7 @@ const EveryDay = () => {
           useFor="Everyday"
           tableSize={3}
           data={data}
-          showData={['name', 'tag', 'isSolved', 'isFavourite']}
+          showData={['NAME', 'TAG', 'SOLVE', 'FAVOURITE']}
           heading="Problems of the Day"
           contextProblemsCF={contextProblemsCF}
           setContextProblemsCF={setContextProblemsCF}

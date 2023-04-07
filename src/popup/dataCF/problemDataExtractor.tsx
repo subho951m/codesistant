@@ -89,7 +89,7 @@ const problemDataExtractor = (
         if (isNewMethodCFSetFetch) {
           // just update daily CF and nothing else
           chrome.storage.sync.set({ dailyCF: newDailyCF })
-          console.log(newDailyCF)
+          //console.log(newDailyCF)
         } else {
           let unsolvedDaily = []
           if (settings.dailyCF && settings.solvedCF) {
@@ -120,21 +120,21 @@ const problemDataExtractor = (
             }
             chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
           }
-          console.log('newDailyCF', newDailyCF)
-          console.log('unsolvedMergeWeekCF', unsolvedMergeWeekCF)
+          //console.log('newDailyCF', newDailyCF)
+          //console.log('unsolvedMergeWeekCF', unsolvedMergeWeekCF)
         }
       } else {
         // method is not set
         // make user go to setting page
-        console.log('Not logged into Codeforces')
+        //console.log('Not logged into Codeforces')
       }
 
-      console.log('Problem 1', settings.methodCF)
-      console.log('Problem 2', settings.weekCF)
-      console.log('Problem 3', settings.favouriteCF)
-      console.log('Problem 4', settings.dailyCF)
-      console.log('Problem 5', settings.solvedCF)
-      console.log('set context from problem data extractor')
+      //console.log('Problem 1', settings.methodCF)
+      //console.log('Problem 2', settings.weekCF)
+      //console.log('Problem 3', settings.favouriteCF)
+      //console.log('Problem 4', settings.dailyCF)
+      //console.log('Problem 5', settings.solvedCF)
+      //console.log('set context from problem data extractor')
       contextProblems(setContextProblemsCF, setShouldDisplayData)
     }
   )

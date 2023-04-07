@@ -5,7 +5,7 @@ import '@fontsource/roboto'
 const Leetcode = () => {
   return (
     <div className="leetcode">
-      <div className="leetcode-header-content">Leetcode</div>
+      <div className="leetcode-header-content">Leetcode coming soon...</div>
     </div>
   )
 }

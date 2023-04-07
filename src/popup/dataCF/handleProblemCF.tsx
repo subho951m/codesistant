@@ -27,13 +27,19 @@ const handleProblemsCF = (
   setShouldDisplayData
 ) => {
   chrome.storage.sync.get(['codeforcesHandle'], function (handle) {
-    console.log('Point 1')
+    //console.log('Point 1')
     let makeProblemSetCount = 0
     if (handle.codeforcesHandle) {
-      setIsLoggedInCodeforces(true)
-      console.log('Logged into codeforces')
+      const userHandleCF = handle.codeforcesHandle
+      setIsLoggedInCodeforces((element) => ({
+        ...element,
+        loggedIn: true,
+        CFHandle: userHandleCF,
+      }))
+      //console.log('Logged into codeforces')
       // user status should get updated every time codeforces is rendered
       fetchUserStatusCF(
+        userHandleCF,
         setUserStatusCF,
         setContextStatusCF,
         setShouldDisplayData
@@ -44,20 +50,20 @@ const handleProblemsCF = (
           const lastFetchedProblemsDate = new Date(
             problems.lastFetchedProblemsDate
           )
-          console.log('Point 2')
-          console.log('Current date', currentDate)
-          console.log('lastFetchedProblemsDate', lastFetchedProblemsDate)
-          console.log(
-            'lastFetchedProblemsDate type',
-            typeof lastFetchedProblemsDate
-          )
+          //console.log('Point 2')
+          //console.log('Current date', currentDate)
+          //console.log('lastFetchedProblemsDate', lastFetchedProblemsDate)
+          //console.log(
+          //   'lastFetchedProblemsDate type',
+          //   typeof lastFetchedProblemsDate
+          // )
 
           if (lastFetchedProblemsDate.getTime() !== currentDate.getTime()) {
             chrome.storage.sync.get(
               ['codesistantInstalledDate'],
               function (installed) {
-                console.log('Point 3')
-                console.log('lastFetchedProblemsDate', lastFetchedProblemsDate)
+                //console.log('Point 3')
+                //console.log('lastFetchedProblemsDate', lastFetchedProblemsDate)
                 if (installed.codesistantInstalledDate) {
                   let weekStartDate = getFirstDayOfWeek(currentDate)
                   if (weekStartDate < installed.codesistantInstalledDate) {
@@ -83,6 +89,7 @@ const handleProblemsCF = (
                     setContextProblemsCF,
                     setShouldDisplayData
                   )
+                  chrome.storage.sync.set({ isNewMethodCFSet: 'no' })
                 } else {
                   // run time error
                 }
@@ -106,9 +113,9 @@ const handleProblemsCF = (
                 )
                 chrome.storage.sync.set({ isNewMethodCFSet: 'no' })
               } else {
-                console.log(
-                  'No fetching so Setcontext called from handle Problem'
-                )
+                //console.log(
+                //   'No fetching so Setcontext called from handle Problem'
+                // )
                 contextProblems(setContextProblemsCF, setShouldDisplayData)
               }
             })
@@ -118,16 +125,16 @@ const handleProblemsCF = (
           chrome.storage.sync.get(
             ['codesistantInstalledDate'],
             function (installed) {
-              console.log('Point 5')
+              //console.log('Point 5')
               let weekStartDate = getFirstDayOfWeek(currentDate)
-              console.log('Week start date', weekStartDate)
+              //console.log('Week start date', weekStartDate)
               const dateXX = new Date(installed.codesistantInstalledDate)
-              console.log('Install date', dateXX)
+              //console.log('Install date', dateXX)
               if (weekStartDate.getTime() < dateXX.getTime()) {
-                console.log('Week start date inside', weekStartDate)
+                //console.log('Week start date inside', weekStartDate)
                 weekStartDate = dateXX
               }
-              console.log(weekStartDate)
+              //console.log(weekStartDate)
               makeProblemSetCount = countDays(currentDate, weekStartDate) + 1
               fetchProblemsCF(
                 true,
@@ -138,6 +145,7 @@ const handleProblemsCF = (
                 setContextProblemsCF,
                 setShouldDisplayData
               )
+              chrome.storage.sync.set({ isNewMethodCFSet: 'no' })
             }
           )
         }

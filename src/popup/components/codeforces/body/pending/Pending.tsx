@@ -5,15 +5,14 @@ import Tables from '../../../customComponents/tables/Tables'
 import { ProblemsetContext } from '../../Codeforces'
 
 const Pending = () => {
-  console.log('Pending is rendered')
+  //console.log('Pending is rendered')
   const { contextProblemsCF, setContextProblemsCF } =
     useContext(ProblemsetContext)
 
   const week = contextProblemsCF.weekCF
-  console.log('Week .....', week)
-  // const solved = contextProblemsCF.solvedCF
+  //console.log('Week .....', week)
   const favourite = contextProblemsCF.favouriteCF
-  console.log('Favourite after re-render in Pending component', favourite)
+  //console.log('Favourite after re-render in Pending component', favourite)
   const data = []
   for (let i = 0; i < week.length; i++) {
     let obj = {
@@ -22,7 +21,7 @@ const Pending = () => {
         contestId: week[i].problem.contestId,
         index: week[i].problem.index,
       },
-      tags: week[i].fetchTag.tags,
+      tags: week[i].fetchTag,
       isFavourite: false,
     }
     let favouriteFlag = false
@@ -44,7 +43,7 @@ const Pending = () => {
         useFor="Pending"
         tableSize={3}
         data={data}
-        showData={['name', 'tag', 'isFavourite']}
+        showData={['NAME', 'TAG', 'FAVOURITE']}
         heading="Week's Pending"
         contextProblemsCF={contextProblemsCF}
         setContextProblemsCF={setContextProblemsCF}

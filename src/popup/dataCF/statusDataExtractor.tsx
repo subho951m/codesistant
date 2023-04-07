@@ -28,7 +28,7 @@ const statusDataExtractor = (
 
   chrome.storage.sync.set({ solvedCF: solvedProblemsCFArray }, function () {
     contextUserStatus(setContextStatusCF, setShouldDisplayData)
-    console.log('Status Data Extractor solvedProblemsCF', solvedProblemsCFArray)
+    //console.log('Status Data Extractor solvedProblemsCF', solvedProblemsCFArray)
   })
 }
 

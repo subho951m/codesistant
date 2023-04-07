@@ -34,11 +34,11 @@ const contextUserStatus = (setContextStatusCF, setShouldDisplayData) => {
         totalSolved: dataCF.solvedCF.length,
         userStatus: userStatusArray,
       }))
-      console.log('solvedCF', dataCF.solvedCF)
-      console.log('userStatusArray', userStatusArray)
-      console.log('totalSolved', dataCF.solvedCF.length)
+      //console.log('solvedCF', dataCF.solvedCF)
+      //console.log('userStatusArray', userStatusArray)
+      //console.log('totalSolved', dataCF.solvedCF.length)
       setShouldDisplayData((element) => ({ ...element, userStatus: true }))
-      console.log('Now time to display data user status')
+      //console.log('Now time to display data user status')
     }
   })
 }

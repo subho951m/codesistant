@@ -8,7 +8,7 @@ type ChartProps = {
 }
 
 const Chart = (props: ChartProps) => {
-  console.log('Chart is rendered')
+  //console.log('Chart is rendered')
   return (
     <BarChart
       width={350}

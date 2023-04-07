@@ -47,7 +47,9 @@ type TablesProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any
   showData: string[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   contextProblemsCF: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setContextProblemsCF: any
 }
 
@@ -116,8 +118,11 @@ const Tables = (props: TablesProps) => {
                       <StyledTableCell key={uuid()} align="left">
                         {props.showData[0]}
                       </StyledTableCell>,
+                      <StyledTableCell key={uuid()} align="center">
+                        {props.showData[1]}
+                      </StyledTableCell>,
                       ,
-                      ...props.showData.slice(1).map((element) => (
+                      ...props.showData.slice(2).map((element) => (
                         <StyledTableCell key={uuid()} align="right">
                           {element}
                         </StyledTableCell>

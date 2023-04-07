@@ -49,12 +49,12 @@ const ModifiedEverydayCell = ({
   const [toggle, setToggle] = React.useState(isFavourite)
 
   const handleChange = React.useCallback(() => {
-    console.log('Handle change from ModifiedEverydayCell', problem)
+    //console.log('Handle change from ModifiedEverydayCell', problem)
     let newFavouriteCFArray = []
-    console.log(
-      'ContextCF favouriteCF from ModifiedEverydayCell',
-      contextProblemsCF.favouriteCF
-    )
+    //console.log(
+    //   'ContextCF favouriteCF from ModifiedEverydayCell',
+    //   contextProblemsCF.favouriteCF
+    // )
     if (toggle) {
       // remove from favourite list
       newFavouriteCFArray = contextProblemsCF.favouriteCF.filter(
@@ -85,27 +85,56 @@ const ModifiedEverydayCell = ({
         ...element,
         favouriteCF: newFavouriteCFArray,
       }))
-      console.log('Problem from ModifiedEverydayCell', problem)
-      console.log(
-        'Favourite list from ModifiedEverydayCell',
-        contextProblemsCF.favouriteCF
-      )
+      //console.log('Problem from ModifiedEverydayCell', problem)
+      //console.log(
+      //   'Favourite list from ModifiedEverydayCell',
+      //   contextProblemsCF.favouriteCF
+      // )
       setToggle((toggle) => !toggle)
     })
   }, [])
 
-  console.log('Modified Table data called from ModifiedEverydayCell')
+  const getTags = (element) => {
+    const arr = []
+    arr.push(`${element.ratingFrom}-${element.ratingTo}`)
+    if (element.tags.length === 0) {
+      arr.push('ANY-TAGS')
+    } else {
+      for (let i = 0; i < element.tags.length; i++) {
+        arr.push(element.tags[i])
+      }
+    }
+    return arr.toString()
+  }
+
+  const getProblemLink = (problem) => {
+    return `https://codeforces.com/contest/${problem.contestId}/problem/${problem.index}`
+  }
+
+  //console.log('Modified Table data called from ModifiedEverydayCell')
 
   return (
     <TableDataWrapper condition={isSolved} key={uuid()}>
       <StyledTableCell component="th" scope="row">
-        <Button sx={{ fontSize: '11px', padding: 0, margin: 0 }}>
+        <Button
+          sx={{ fontSize: '11px', padding: 0, margin: 0 }}
+          onClick={() => {
+            chrome.tabs.create({
+              url: getProblemLink(problem),
+              active: false,
+            })
+          }}
+        >
           {problem.name}
         </Button>
       </StyledTableCell>
-      <StyledTableCell align="right">{tags[0]}</StyledTableCell>
+      <StyledTableCell align="center">{getTags(tags)}</StyledTableCell>
       <StyledTableCell align="right">
-        {isSolved ? <SolvedButton /> : <UnsolvedButton />}
+        {isSolved ? (
+          <SolvedButton />
+        ) : (
+          <UnsolvedButton problemLink={getProblemLink(problem)} />
+        )}
       </StyledTableCell>
       <StyledTableCell align="right">
         <ToggleButton value="check" selected={toggle} onChange={handleChange}>

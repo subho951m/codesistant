@@ -7,7 +7,7 @@ import { ProblemsetContext } from '../../Codeforces'
 import Tables from '../../../customComponents/tables/Tables'
 
 const Favourite = () => {
-  console.log('Favorite is rendered')
+  //console.log('Favorite is rendered')
   const { contextProblemsCF, setContextProblemsCF } =
     useContext(ProblemsetContext)
   return (
@@ -16,7 +16,7 @@ const Favourite = () => {
         useFor="Favourite"
         tableSize={3}
         data={contextProblemsCF.favouriteCF}
-        showData={['name', 'tag', 'delete']}
+        showData={['NAME', 'TAG', 'DELETE']}
         heading="Favourite Problems"
         contextProblemsCF={contextProblemsCF}
         setContextProblemsCF={setContextProblemsCF}

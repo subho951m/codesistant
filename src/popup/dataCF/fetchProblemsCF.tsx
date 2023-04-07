@@ -32,7 +32,7 @@ const fetchProblemsCF = (
       chrome.storage.sync.set({
         lastFetchedProblemsDate: currentDate.toString(),
       })
-      console.log('Problems data fetched')
+      //console.log('Problems data fetched')
     })
     .catch(function (error) {
       setProblemsCF((problemsCF) => ({
@@ -44,18 +44,18 @@ const fetchProblemsCF = (
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        console.log('Point 1')
+        //console.log('Point 1')
         if (error.response.data.comment === undefined) {
           errorMessage = 'Something went wrong'
-          console.log('Something went wrong')
+          //console.log('Something went wrong')
         } else {
           errorMessage = error.response.data.comment
-          console.log(error.response.data.comment)
+          //console.log(error.response.data.comment)
         }
       } else {
         errorMessage = 'Something went wrong'
-        console.log('Point 2')
-        console.log('Something went wrong')
+        //console.log('Point 2')
+        //console.log('Something went wrong')
       }
       setProblemsCF((problemsCF) => ({
         ...problemsCF,

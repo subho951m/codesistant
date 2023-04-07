@@ -5,6 +5,7 @@ import MyModal from './components/modal/MyModal'
 import Button from '@mui/material/Button'
 import getTableDataFromStorage from './components/data/getTableDataFromStorage'
 import handleDataSubmit from './components/data/handleDataSubmit'
+import CircularProgress from '@mui/material/CircularProgress'
 
 function Options() {
   const [isGettingStorage, setIsGettingStorage] = useState(true)
@@ -56,31 +57,38 @@ function Options() {
   return (
     <div className="App">
       {isGettingStorage ? (
-        <div className="loading">Loading...Storage...</div>
+        <div className="loading">
+          <CircularProgress color="secondary" />
+        </div>
       ) : closeThisTab ? (
-        <div className="Loading">Loading...Closing..</div>
+        <div className="Loading">
+          <CircularProgress color="success" />
+        </div>
       ) : (
-        <form className="options-methodCF" onSubmit={handleOptionsSubmit}>
-          <Table
-            rows={rows}
-            deleteRow={handleDeleteRow}
-            editRow={handleEditRow}
-          />
-
-          <div className="options-button-grp">
-            <Button onClick={handleOpen}>Add my Modal</Button>
-            <Button type="submit">Save & Close</Button>
-          </div>
-
-          {open && (
-            <MyModal
-              open={open}
-              handleClose={handleClose}
-              onSubmit={handleSubmit}
-              defaultValue={rowToEdit !== null && rows[rowToEdit]}
+        <>
+          <h2>Setup your choices of problem for CODEFORCES</h2>
+          <form className="options-methodCF" onSubmit={handleOptionsSubmit}>
+            <Table
+              rows={rows}
+              deleteRow={handleDeleteRow}
+              editRow={handleEditRow}
             />
-          )}
-        </form>
+
+            <div className="options-button-grp">
+              <Button onClick={handleOpen}>Add a preference</Button>
+              <Button type="submit">Save & Close</Button>
+            </div>
+
+            {open && (
+              <MyModal
+                open={open}
+                handleClose={handleClose}
+                onSubmit={handleSubmit}
+                defaultValue={rowToEdit !== null && rows[rowToEdit]}
+              />
+            )}
+          </form>
+        </>
       )}
     </div>
   )

@@ -8,6 +8,7 @@ import Pending from './body/pending/Pending'
 import Favourite from './body/favourite/Favourite'
 import Signin from './signin/Signin'
 import handleProblemsCF from '../../dataCF/handleProblemCF'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const defaultProblemsCF = {
   methodCF: [],
@@ -76,7 +77,10 @@ const Codeforces = () => {
     )
   }
 
-  const [isLoggedInCodeforces, setIsLoggedInCodeforces] = useState(false)
+  const [isLoggedInCodeforces, setIsLoggedInCodeforces] = useState({
+    loggedIn: false,
+    CFHandle: '',
+  })
   const [isGettingStorageAPI, setIsGettingStorageAPI] = useState(true)
   const [problemsCF, setProblemsCF] = useState({
     isLoading: false,
@@ -107,7 +111,7 @@ const Codeforces = () => {
   )
 
   useEffect(() => {
-    console.log('Should fetch problem')
+    //console.log('Should fetch problem')
     handleProblemsCF(
       currentDate,
       setIsLoggedInCodeforces,
@@ -121,10 +125,18 @@ const Codeforces = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  if (problemsCF.isError || userStatusCF.isError) {
+    // thorw error
+  }
+
   if (isGettingStorageAPI) {
-    return <div className="loading">Loading...Storage...</div>
+    return (
+      <div className="loading">
+        <CircularProgress color="secondary" />
+      </div>
+    )
   } else {
-    if (!isLoggedInCodeforces) {
+    if (!isLoggedInCodeforces.loggedIn) {
       return (
         <div className="codeforces">
           <Signin />
@@ -132,14 +144,17 @@ const Codeforces = () => {
       )
     } else {
       if (shouldDisplayData.problems && shouldDisplayData.userStatus) {
-        console.log('Display Codeforces data')
-        console.log('contextproblem', contextProblemsCF)
-        console.log('status context', contextStatusCF)
-        console.log('Just for fun', userStatusCF, problemsCF)
+        //console.log('Display Codeforces data')
+        //console.log('contextproblem', contextProblemsCF)
+        //console.log('status context', contextStatusCF)
+        //console.log('Just for fun', userStatusCF, problemsCF)
         return (
           <div className="codeforces">
             <div className="codeforces-header">
-              <Header solved={contextStatusCF.totalSolved} />
+              <Header
+                solved={contextStatusCF.totalSolved}
+                userHandleCF={isLoggedInCodeforces.CFHandle}
+              />
             </div>
             <div className="codeforces-navigate">
               <PageNavigate
@@ -157,7 +172,11 @@ const Codeforces = () => {
           </div>
         )
       } else {
-        return <div className="loading">Loading...Fetching...</div>
+        return (
+          <div className="loading">
+            <CircularProgress color="secondary" />
+          </div>
+        )
       }
     }
   }

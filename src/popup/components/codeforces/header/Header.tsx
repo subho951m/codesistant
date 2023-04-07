@@ -18,6 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 type HeaderProps = {
   solved: number
+  userHandleCF: string
 }
 
 const Header = (props: HeaderProps) => {
@@ -40,7 +41,7 @@ const Header = (props: HeaderProps) => {
           // onMouseEnter={() => setIsHover(true)}
           // onMouseLeave={() => setIsHover(false)}
           >
-            <Item>ABCDEFGHIJKLMNOPQRSTUVWX</Item>
+            <Item>{props.userHandleCF}</Item>
           </div>
         </Grid>
         <Grid item xs={3.5}>

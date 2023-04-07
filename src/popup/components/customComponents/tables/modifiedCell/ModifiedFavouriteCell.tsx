@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
@@ -36,9 +37,9 @@ const ModifiedFavouriteCell = ({
   dataLength,
 }) => {
   const handleChange = React.useCallback(() => {
-    console.log('Handle change', problem)
+    //console.log('Handle change', problem)
     let newFavouriteCFArray = []
-    console.log('COntextCF favouriteCF ', contextProblemsCF.favouriteCF)
+    //console.log('COntextCF favouriteCF ', contextProblemsCF.favouriteCF)
     // remove from favourite list
     newFavouriteCFArray = contextProblemsCF.favouriteCF.filter(
       (element) =>
@@ -54,8 +55,8 @@ const ModifiedFavouriteCell = ({
         ...element,
         favouriteCF: newFavouriteCFArray,
       }))
-      console.log('Problem deleted', problem)
-      console.log('Favourite list', contextProblemsCF.favouriteCF)
+      //console.log('Problem deleted', problem)
+      //console.log('Favourite list', contextProblemsCF.favouriteCF)
     })
 
     setPage((page) =>
@@ -63,16 +64,41 @@ const ModifiedFavouriteCell = ({
     )
   }, [])
 
-  console.log('Modified Table data called')
+  const getTags = (element) => {
+    const arr = []
+    arr.push(`${element.ratingFrom}-${element.ratingTo}`)
+    if (element.tags.length === 0) {
+      arr.push('ANY-TAGS')
+    } else {
+      for (let i = 0; i < element.tags.length; i++) {
+        arr.push(element.tags[i])
+      }
+    }
+    return arr.toString()
+  }
+
+  const getProblemLink = (problem) => {
+    return `https://codeforces.com/contest/${problem.contestId}/problem/${problem.index}`
+  }
+
+  //console.log('Modified Table data called')
 
   return (
     <StyledTableRow key={uuid()}>
       <StyledTableCell component="th" scope="row">
-        <Button sx={{ fontSize: '11px', padding: 0, margin: 0 }}>
+        <Button
+          sx={{ fontSize: '11px', padding: 0, margin: 0 }}
+          onClick={() => {
+            chrome.tabs.create({
+              url: getProblemLink(problem),
+              active: false,
+            })
+          }}
+        >
           {problem.name}
         </Button>
       </StyledTableCell>
-      <StyledTableCell align="right">{tags[0]}</StyledTableCell>
+      <StyledTableCell align="center">{getTags(tags)}</StyledTableCell>
       <StyledTableCell align="right">
         <Button onClick={handleChange}>
           <DeleteIcon />

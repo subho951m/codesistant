@@ -3,7 +3,11 @@ import '@fontsource/roboto'
 import { Button } from '@mui/material'
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'
 
-const UnsolvedButton = () => {
+type UnsolvedButtonProps = {
+  problemLink: string
+}
+
+const UnsolvedButton = (props: UnsolvedButtonProps) => {
   return (
     <>
       <Button
@@ -13,6 +17,12 @@ const UnsolvedButton = () => {
           maxHeight: '30px',
           minWidth: '50px',
           minHeight: '30px',
+        }}
+        onClick={() => {
+          chrome.tabs.create({
+            url: props.problemLink,
+            active: false,
+          })
         }}
       >
         <ArrowCircleRightIcon />

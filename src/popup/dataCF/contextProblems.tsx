@@ -10,9 +10,9 @@ const contextProblems = (setContextProblemsCF, setShouldDisplayData) => {
         dailyCF: dataCF.dailyCF,
         solvedCF: dataCF.solvedCF,
       }))
-      console.log(dataCF.dailyCF)
+      //console.log(dataCF.dailyCF)
       setShouldDisplayData((element) => ({ ...element, problems: true }))
-      console.log('Now time to display data')
+      //console.log('Now time to display data')
       // now it is correct time to display data
     }
   )

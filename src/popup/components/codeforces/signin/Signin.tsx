@@ -7,14 +7,23 @@ import Container from '@mui/material/Container'
 import LOGO from '../assets/codeforces.svg'
 import '@fontsource/roboto'
 import './Signin.css'
+import handleCFCheck from './checks/handleCFCheck'
+import Alert from '@mui/material/Alert'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const Signin = () => {
+  const [isSuccess, setIsSuccess] = React.useState(false)
+  const [error, setError] = React.useState({
+    isError: false,
+    errorMessage: '',
+  })
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     const CFHandle = data.get('codeforcesHandle')
-    console.log(CFHandle)
-    chrome.storage.sync.set({ codeforcesHandle: CFHandle })
+    //console.log(CFHandle)
+    // implement a CFHandle check function
+    handleCFCheck(CFHandle, setIsSuccess, setError)
   }
 
   return (
@@ -47,8 +56,11 @@ const Signin = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            SUBMIT
+            {isSuccess ? <CircularProgress color="success" /> : 'Submit'}
           </Button>
+          {error.isError ? (
+            <Alert severity="error">{error.errorMessage}</Alert>
+          ) : null}
         </Box>
       </Box>
       <Typography
