@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Codesistant",
-  "description": "Suggest a coding problem within mentioned frequency of days.",
-  "version": "1.0.0",
+  "description": "Suggest coding problems everyday, week's unsolved problems and favourite problems.",
+  "version": "1.0.1",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
@@ -15,6 +15,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "tabs"],
+  "permissions": ["storage"],
+  "host_permissions": ["https://codeforces.com/*"],
   "options_page": "options.html"
 }
