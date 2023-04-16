@@ -5,25 +5,37 @@ chrome.runtime.onInstalled.addListener(() => {
     currentTimeStamp.getMonth(),
     currentTimeStamp.getDate()
   )
-  chrome.storage.sync.set({ codesistantInstalledDate: currentDate.toString() })
-  chrome.storage.sync.set({
+  chrome.storage.local.set({ codesistantInstalledDate: currentDate.toString() })
+  chrome.storage.local.set({
     methodCF: [
       { ratingFrom: 1300, ratingTo: 1600, tags: ['dp', 'implementation'] },
       { ratingFrom: 1300, ratingTo: 1900, tags: ['dp'] },
     ],
   })
-  chrome.storage.sync.set({
-    weekCF: [],
-  })
-  chrome.storage.sync.set({ favouriteCF: [] })
-  chrome.storage.sync.set({
+  chrome.storage.local.set({ weekCF: [] })
+  // weekCF: [
+  //   {
+  //     problem: { name: 'Three displays', contestId: 987, index: 'C' },
+  //     fetchTag: {
+  //       ratingFrom: 1300,
+  //       ratingTo: 1600,
+  //       tags: ['dp', 'implementation'],
+  //     },
+  //   },
+  //   {
+  //     problem: { name: 'Cyclic Permutations', contestId: 1391, index: 'C' },
+  //     fetchTag: { ratingFrom: 1300, ratingTo: 1900, tags: ['dp'] },
+  //   },
+  // ],
+  chrome.storage.local.set({ favouriteCF: [] })
+  chrome.storage.local.set({
     dailyCF: [],
   })
-  chrome.storage.sync.set({ solvedCF: [] })
+  chrome.storage.local.set({ solvedCF: [] })
   //console.log('Extension is Installed')
-  chrome.storage.sync.get(['codesistantInstalledDate'], function (install) {
+  chrome.storage.local.get(['codesistantInstalledDate'], function (install) {
     if (install.codesistantInstalledDate) {
-      //console.log('Background', new Date(install.codesistantInstalledDate))
+      // console.log('Background', new Date(install.codesistantInstalledDate))
     }
   })
 })

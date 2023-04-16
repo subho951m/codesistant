@@ -22,7 +22,7 @@ const fetchUserStatusCF = (
         setContextStatusCF,
         setShouldDisplayData
       )
-      //console.log('status data fetched')
+      // console.log('status data fetched')
     })
     .catch(function (error) {
       setUserStatusCF((userStatusCF) => ({

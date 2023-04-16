@@ -6,7 +6,7 @@ const handleCFCheck = (CFHandle, setIsSuccess, setError) => {
     .then(() => {
       // success
       setIsSuccess(true)
-      chrome.storage.sync.set({ codeforcesHandle: CFHandle })
+      chrome.storage.local.set({ codeforcesHandle: CFHandle })
       // apply a little delay
       setTimeout(() => {
         chrome.runtime.openOptionsPage()

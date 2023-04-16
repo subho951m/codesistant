@@ -13,7 +13,7 @@ const handleDataSubmit = (data, setCloseThisTab) => {
     newMethodCF.push(obj)
   }
   //console.log(newMethodCF)
-  chrome.storage.sync.set(
+  chrome.storage.local.set(
     { methodCF: newMethodCF, isNewMethodCFSet: 'yes' },
     function () {
       // data has been set

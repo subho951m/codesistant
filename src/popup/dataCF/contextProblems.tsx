@@ -1,5 +1,5 @@
 const contextProblems = (setContextProblemsCF, setShouldDisplayData) => {
-  chrome.storage.sync.get(
+  chrome.storage.local.get(
     ['methodCF', 'weekCF', 'favouriteCF', 'dailyCF', 'solvedCF'],
     function (dataCF) {
       setContextProblemsCF((element) => ({

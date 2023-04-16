@@ -11,6 +11,7 @@ const Pending = () => {
 
   const week = contextProblemsCF.weekCF
   //console.log('Week .....', week)
+  const solved = contextProblemsCF.solvedCF
   const favourite = contextProblemsCF.favouriteCF
   //console.log('Favourite after re-render in Pending component', favourite)
   const data = []
@@ -22,6 +23,7 @@ const Pending = () => {
         index: week[i].problem.index,
       },
       tags: week[i].fetchTag,
+      isSolved: false,
       isFavourite: false,
     }
     let favouriteFlag = false
@@ -34,7 +36,17 @@ const Pending = () => {
         favouriteFlag = true
       }
     }
-    obj = { ...obj, isFavourite: favouriteFlag }
+    let solveFlag = false
+    for (let j = 0; j < solved.length; j++) {
+      if (
+        solved[j].name === week[i].problem.name &&
+        solved[j].contestId === week[i].problem.contestId &&
+        solved[j].index === week[i].problem.index
+      ) {
+        solveFlag = true
+      }
+    }
+    obj = { ...obj, isSolved: solveFlag, isFavourite: favouriteFlag }
     data.push(obj)
   }
   return (

@@ -50,7 +50,7 @@ const ModifiedFavouriteCell = ({
         )
     )
 
-    chrome.storage.sync.set({ favouriteCF: newFavouriteCFArray }, function () {
+    chrome.storage.local.set({ favouriteCF: newFavouriteCFArray }, function () {
       setContextProblemsCF((element) => ({
         ...element,
         favouriteCF: newFavouriteCFArray,

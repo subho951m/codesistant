@@ -28,7 +28,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }))
 
+const TableDataWrapper = ({ condition, children }) => {
+  return condition ? (
+    <StyledTableRow selected>{children}</StyledTableRow>
+  ) : (
+    <StyledTableRow>{children}</StyledTableRow>
+  )
+}
+
 const ModifiedPendingCell = ({
+  isSolved,
   problem,
   tags,
   isFavourite,
@@ -69,7 +78,7 @@ const ModifiedPendingCell = ({
         tags: tags,
       })
     }
-    chrome.storage.sync.set({ favouriteCF: newFavouriteCFArray }, function () {
+    chrome.storage.local.set({ favouriteCF: newFavouriteCFArray }, function () {
       setContextProblemsCF((element) => ({
         ...element,
         favouriteCF: newFavouriteCFArray,
@@ -103,7 +112,7 @@ const ModifiedPendingCell = ({
   //console.log('Modified Table data called from ModifiedPendingCell')
 
   return (
-    <StyledTableRow key={uuid()}>
+    <TableDataWrapper condition={isSolved} key={uuid()}>
       <StyledTableCell component="th" scope="row">
         <Button
           sx={{ fontSize: '11px', padding: 0, margin: 0 }}
@@ -127,7 +136,7 @@ const ModifiedPendingCell = ({
           )}
         </ToggleButton>
       </StyledTableCell>
-    </StyledTableRow>
+    </TableDataWrapper>
   )
 }
 

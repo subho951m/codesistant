@@ -12,6 +12,7 @@ const fetchProblemsCF = (
   setShouldDisplayData
 ) => {
   setProblemsCF((problemsCF) => ({ ...problemsCF, isLoading: true }))
+  // console.log('Started fetching problems data')
   axios
     .get('https://codeforces.com/api/problemset.problems')
     .then((response) => {
@@ -29,10 +30,10 @@ const fetchProblemsCF = (
         setContextProblemsCF,
         setShouldDisplayData
       )
-      chrome.storage.sync.set({
+      chrome.storage.local.set({
         lastFetchedProblemsDate: currentDate.toString(),
       })
-      //console.log('Problems data fetched')
+      // console.log('Problems data fetched')
     })
     .catch(function (error) {
       setProblemsCF((problemsCF) => ({
@@ -47,7 +48,7 @@ const fetchProblemsCF = (
         //console.log('Point 1')
         if (error.response.data.comment === undefined) {
           errorMessage = 'Something went wrong'
-          //console.log('Something went wrong')
+          // console.log('Something went wrong')
         } else {
           errorMessage = error.response.data.comment
           //console.log(error.response.data.comment)

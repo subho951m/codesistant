@@ -47,7 +47,7 @@ function Options() {
   }
 
   useEffect(() => {
-    chrome.storage.sync.get('methodCF', function (CF) {
+    chrome.storage.local.get('methodCF', function (CF) {
       if (CF.methodCF) {
         getTableDataFromStorage(setRows, CF.methodCF, setIsGettingStorage)
       }

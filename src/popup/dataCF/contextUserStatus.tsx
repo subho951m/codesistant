@@ -1,5 +1,5 @@
 const contextUserStatus = (setContextStatusCF, setShouldDisplayData) => {
-  chrome.storage.sync.get(['solvedCF'], function (dataCF) {
+  chrome.storage.local.get(['solvedCF'], function (dataCF) {
     if (dataCF.solvedCF) {
       const inf = 900000
       let heighestRatingSolved = -inf
@@ -34,11 +34,11 @@ const contextUserStatus = (setContextStatusCF, setShouldDisplayData) => {
         totalSolved: dataCF.solvedCF.length,
         userStatus: userStatusArray,
       }))
-      //console.log('solvedCF', dataCF.solvedCF)
-      //console.log('userStatusArray', userStatusArray)
-      //console.log('totalSolved', dataCF.solvedCF.length)
+      // console.log('solvedCF', dataCF.solvedCF)
+      // console.log('userStatusArray', userStatusArray)
+      // console.log('totalSolved', dataCF.solvedCF.length)
       setShouldDisplayData((element) => ({ ...element, userStatus: true }))
-      //console.log('Now time to display data user status')
+      // console.log('Now time to display data user status')
     }
   })
 }

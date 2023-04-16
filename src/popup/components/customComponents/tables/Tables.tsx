@@ -148,6 +148,7 @@ const Tables = (props: TablesProps) => {
                     ) : props.useFor === 'Pending' ? (
                       <ModifiedPendingCell
                         key={uuid()}
+                        isSolved={row.isSolved}
                         problem={row.problem}
                         tags={row.tags}
                         isFavourite={row.isFavourite}

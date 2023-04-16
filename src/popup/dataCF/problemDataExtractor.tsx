@@ -51,7 +51,7 @@ const problemDataExtractor = (
   setContextProblemsCF,
   setShouldDisplayData
 ) => {
-  chrome.storage.sync.get(
+  chrome.storage.local.get(
     ['methodCF', 'weekCF', 'favouriteCF', 'dailyCF', 'solvedCF'],
     function (settings) {
       if (settings.methodCF) {
@@ -88,8 +88,8 @@ const problemDataExtractor = (
         const newDailyCF = problemBatch[0]
         if (isNewMethodCFSetFetch) {
           // just update daily CF and nothing else
-          chrome.storage.sync.set({ dailyCF: newDailyCF })
-          //console.log(newDailyCF)
+          chrome.storage.local.set({ dailyCF: newDailyCF })
+          // console.log(newDailyCF)
         } else {
           let unsolvedDaily = []
           if (settings.dailyCF && settings.solvedCF) {
@@ -109,19 +109,19 @@ const problemDataExtractor = (
               unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
             }
 
-            chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
-            chrome.storage.sync.set({ dailyCF: newDailyCF })
+            chrome.storage.local.set({ weekCF: unsolvedMergeWeekCF })
+            chrome.storage.local.set({ dailyCF: newDailyCF })
           } else {
-            chrome.storage.sync.set({ dailyCF: newDailyCF })
+            chrome.storage.local.set({ dailyCF: newDailyCF })
             unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(unsolvedDaily)
             if (toBeFetchedProblemSetCount > 1) {
               const newWeekCF = problemBatch.slice(1)
               unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
             }
-            chrome.storage.sync.set({ weekCF: unsolvedMergeWeekCF })
+            chrome.storage.local.set({ weekCF: unsolvedMergeWeekCF })
           }
-          //console.log('newDailyCF', newDailyCF)
-          //console.log('unsolvedMergeWeekCF', unsolvedMergeWeekCF)
+          // console.log('newDailyCF', newDailyCF)
+          // console.log('unsolvedMergeWeekCF', unsolvedMergeWeekCF)
         }
       } else {
         // method is not set
@@ -139,7 +139,7 @@ const problemDataExtractor = (
     }
   )
 
-  chrome.storage.sync.set({ lastFetchedProblemsDate: currentDate.toString() })
+  chrome.storage.local.set({ lastFetchedProblemsDate: currentDate.toString() })
 }
 
 export default problemDataExtractor
