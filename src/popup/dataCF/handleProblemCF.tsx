@@ -29,6 +29,7 @@ const handleProblemsCF = (
   chrome.storage.local.get(['codeforcesHandle'], function (handle) {
     //console.log('Point 1')
     let makeProblemSetCount = 0
+    let isWeekContinuedFetch = true
     if (handle.codeforcesHandle) {
       const userHandleCF = handle.codeforcesHandle
       setIsLoggedInCodeforces((element) => ({
@@ -74,19 +75,26 @@ const handleProblemsCF = (
                         currentDate,
                         weekStartDate
                       )
+
+                      // isWeekContinuedFetch = true
                     } else {
                       if (lastFetchedProblemsDate < weekStartDate) {
                         makeProblemSetCount =
                           countDays(currentDate, weekStartDate) + 1
+
+                        isWeekContinuedFetch = false
+                        // it is a fresh fetch, week's pending should vanish first and then any action
                       } else {
                         makeProblemSetCount = countDays(
                           currentDate,
                           lastFetchedProblemsDate
                         )
+
+                        // isWeekContinuedFetch = true
                       }
                     }
                     fetchProblemsCF(
-                      true,
+                      isWeekContinuedFetch,
                       makeProblemSetCount,
                       currentDate,
                       false,
@@ -108,7 +116,7 @@ const handleProblemsCF = (
                 if (CF.isNewMethodCFSet && CF.isNewMethodCFSet === 'yes') {
                   // just fetch and change dailyCF according to methodCF
                   fetchProblemsCF(
-                    true,
+                    isWeekContinuedFetch,
                     1,
                     currentDate,
                     true,
@@ -141,8 +149,12 @@ const handleProblemsCF = (
                 }
                 //console.log(weekStartDate)
                 makeProblemSetCount = countDays(currentDate, weekStartDate) + 1
+
+                isWeekContinuedFetch = false
+                // it is a fresh fetch, week's pending should vanish first and then any action
+
                 fetchProblemsCF(
-                  true,
+                  isWeekContinuedFetch,
                   makeProblemSetCount,
                   currentDate,
                   false,

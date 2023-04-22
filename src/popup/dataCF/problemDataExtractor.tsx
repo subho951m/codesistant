@@ -52,7 +52,7 @@ const problemDataExtractor = (
   setShouldDisplayData
 ) => {
   chrome.storage.local.get(
-    ['methodCF', 'weekCF', 'favouriteCF', 'dailyCF', 'solvedCF'],
+    ['methodCF', 'weekCF', 'dailyCF', 'solvedCF'],
     function (settings) {
       if (settings.methodCF) {
         const problemSetArray = new Array(settings.methodCF.length)
@@ -100,6 +100,7 @@ const problemDataExtractor = (
           }
           let unsolvedMergeWeekCF = []
           if (isWeekContinuedFetch) {
+            // not a fresh fresh, it is fetched in continuation of the present week of last fetched problem date
             if (settings.weekCF) {
               unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(settings.weekCF)
             }
@@ -112,8 +113,12 @@ const problemDataExtractor = (
             chrome.storage.local.set({ weekCF: unsolvedMergeWeekCF })
             chrome.storage.local.set({ dailyCF: newDailyCF })
           } else {
+            // fresh fetch, new week from last problem fetched date
             chrome.storage.local.set({ dailyCF: newDailyCF })
-            unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(unsolvedDaily)
+
+            // Don't want sunday's unsolved problem to be displayed in monday's week pending
+            // unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(unsolvedDaily)
+
             if (toBeFetchedProblemSetCount > 1) {
               const newWeekCF = problemBatch.slice(1)
               unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
@@ -131,7 +136,6 @@ const problemDataExtractor = (
 
       //console.log('Problem 1', settings.methodCF)
       //console.log('Problem 2', settings.weekCF)
-      //console.log('Problem 3', settings.favouriteCF)
       //console.log('Problem 4', settings.dailyCF)
       //console.log('Problem 5', settings.solvedCF)
       //console.log('set context from problem data extractor')

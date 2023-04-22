@@ -21,19 +21,31 @@ const fetchProblemsCF = (
         isLoading: false,
         data: response.data,
       }))
-      problemDataExtractor(
-        response.data,
-        isWeekContinuedFetch,
-        toBeFetchedProblemSetCount,
-        currentDate,
-        isNewMethodCFSetFetch,
-        setContextProblemsCF,
-        setShouldDisplayData
-      )
-      chrome.storage.local.set({
-        lastFetchedProblemsDate: currentDate.toString(),
-      })
-      // console.log('Problems data fetched')
+      const contentType = response.headers['content-type']
+      if (contentType && contentType.indexOf('application/json') !== -1) {
+        // The response was a JSON object
+        problemDataExtractor(
+          response.data,
+          isWeekContinuedFetch,
+          toBeFetchedProblemSetCount,
+          currentDate,
+          isNewMethodCFSetFetch,
+          setContextProblemsCF,
+          setShouldDisplayData
+        )
+        chrome.storage.local.set({
+          lastFetchedProblemsDate: currentDate.toString(),
+        })
+        // console.log('Problems data fetched')
+      } else {
+        // The response wasn't a JSON object
+        setProblemsCF((problemsCF) => ({
+          ...problemsCF,
+          isError: true,
+          error: 'Something went wrong. Please try again after sometime.',
+        }))
+        contextProblems(setContextProblemsCF, setShouldDisplayData)
+      }
     })
     .catch(function (error) {
       setProblemsCF((problemsCF) => ({
@@ -46,12 +58,17 @@ const fetchProblemsCF = (
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         //console.log('Point 1')
-        if (error.response.data.comment === undefined) {
-          errorMessage = 'Something went wrong'
-          // console.log('Something went wrong')
+        if (error.response.status === 403) {
+          errorMessage =
+            'Something went wrong. Please visit codeforces.com and try again.'
         } else {
-          errorMessage = error.response.data.comment
-          //console.log(error.response.data.comment)
+          if (error.response.data.comment === undefined) {
+            errorMessage = 'Something went wrong'
+            // console.log('Something went wrong')
+          } else {
+            errorMessage = error.response.data.comment
+            //console.log(error.response.data.comment)
+          }
         }
       } else {
         errorMessage = 'Something went wrong'

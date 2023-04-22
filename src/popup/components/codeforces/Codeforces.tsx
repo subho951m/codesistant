@@ -9,6 +9,7 @@ import Favourite from './body/favourite/Favourite'
 import Signin from './signin/Signin'
 import handleProblemsCF from '../../dataCF/handleProblemCF'
 import CircularProgress from '@mui/material/CircularProgress'
+import CustomizedSnackbars from '../customComponents/snackbar/CustomizedSnackbars'
 
 const defaultProblemsCF = {
   methodCF: [],
@@ -169,6 +170,11 @@ const Codeforces = () => {
                 {codeforcesBodyContent}
               </UserStatusContext.Provider>
             </ProblemsetContext.Provider>
+            {problemsCF.isError ? (
+              <CustomizedSnackbars message={problemsCF.error} />
+            ) : userStatusCF.isError ? (
+              <CustomizedSnackbars message={userStatusCF.error} />
+            ) : null}
           </div>
         )
       } else {
@@ -183,6 +189,3 @@ const Codeforces = () => {
 }
 
 export default Codeforces
-
-// {problemsCF.isError ? problemsCF.error : null}
-// {userStatusCF.isError ? userStatusCF.error : null}

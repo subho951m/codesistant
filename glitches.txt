@@ -1,7 +1,0 @@
-1. At login, if I type handle lone@, it is taking in as 'lone' and signing in, but in user status it is taking 'lone@'. Therefore an error.
-2. If I solved a problem, when I open popup it is showing not solved. When I opened it second time, it is showing solved.
-3. Implement a logout functionality.
-4. If we solve week's pending problems, it does not go away.
-5. On favourite, make visible solved or unsolved using color.
-6. When CF is under maintainance, it returns html as a object, causing bugs.
-7. When there is a lot of problems to display it can not store so much data.

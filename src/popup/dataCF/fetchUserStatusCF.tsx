@@ -17,12 +17,25 @@ const fetchUserStatusCF = (
         isLoading: false,
         data: response.data,
       }))
-      statusDataExtractor(
-        response.data.result,
-        setContextStatusCF,
-        setShouldDisplayData
-      )
-      // console.log('status data fetched')
+      const contentType = response.headers['content-type']
+      if (contentType && contentType.indexOf('application/json') !== -1) {
+        // The response was a JSON object
+        statusDataExtractor(
+          response.data.result,
+          setContextStatusCF,
+          setShouldDisplayData
+        )
+        // console.log('status data fetched')
+      } else {
+        // The response wasn't a JSON object
+        setUserStatusCF((userStatusCF) => ({
+          ...userStatusCF,
+          isError: true,
+          error: 'Something went wrong. Please try again after sometime.',
+        }))
+        // console.clear()
+        contextUserStatus(setContextStatusCF, setShouldDisplayData)
+      }
     })
     .catch(function (error) {
       setUserStatusCF((userStatusCF) => ({
@@ -35,12 +48,17 @@ const fetchUserStatusCF = (
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         //console.log('Point 1')
-        if (error.response.data.comment === undefined) {
-          errorMessage = 'Something went wrong'
-          //console.log('Something went wrong')
+        if (error.response.status === 403) {
+          errorMessage =
+            'Something went wrong. Please visit codeforces.com and try again.'
         } else {
-          errorMessage = error.response.data.comment
-          //console.log(error.response.data.comment)
+          if (error.response.data.comment === undefined) {
+            errorMessage = 'Something went wrong'
+            //console.log('Something went wrong')
+          } else {
+            errorMessage = error.response.data.comment
+            //console.log(error.response.data.comment)
+          }
         }
       } else {
         errorMessage = 'Something went wrong'
