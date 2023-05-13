@@ -21,6 +21,15 @@ const EveryDay = () => {
   // console.log('Favourite after re-render', favourite)
   const data = []
   for (let i = 0; i < daily.length; i++) {
+    if (
+      daily[i] === null ||
+      daily[i].problem === null ||
+      daily[i].problem.name === null ||
+      daily[i].problem.contestId === null ||
+      daily[i].problem.index === null ||
+      daily[i].fetchTag === null
+    )
+      continue
     let obj = {
       problem: {
         name: daily[i].problem.name,
@@ -56,6 +65,9 @@ const EveryDay = () => {
   }
 
   const contextStatusCF = useContext(UserStatusContext)
+
+  console.log(contextProblemsCF)
+  console.log(UserStatusContext)
 
   return (
     <div className="everyday">

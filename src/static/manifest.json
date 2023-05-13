@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Codesistant",
   "description": "Suggest coding problems everyday, week's unsolved problems and favourite problems.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",

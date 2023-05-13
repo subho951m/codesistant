@@ -88,7 +88,11 @@ const problemDataExtractor = (
         const newDailyCF = problemBatch[0]
         if (isNewMethodCFSetFetch) {
           // just update daily CF and nothing else
-          chrome.storage.local.set({ dailyCF: newDailyCF })
+          chrome.storage.local.set({
+            dailyCF: newDailyCF,
+            lastFetchedProblemsDate: currentDate.toString(),
+            isNewMethodCFSet: 'no',
+          })
           // console.log(newDailyCF)
         } else {
           let unsolvedDaily = []
@@ -110,11 +114,14 @@ const problemDataExtractor = (
               unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
             }
 
-            chrome.storage.local.set({ weekCF: unsolvedMergeWeekCF })
-            chrome.storage.local.set({ dailyCF: newDailyCF })
+            chrome.storage.local.set({
+              weekCF: unsolvedMergeWeekCF,
+              dailyCF: newDailyCF,
+              lastFetchedProblemsDate: currentDate.toString(),
+              isNewMethodCFSet: 'no',
+            })
           } else {
             // fresh fetch, new week from last problem fetched date
-            chrome.storage.local.set({ dailyCF: newDailyCF })
 
             // Don't want sunday's unsolved problem to be displayed in monday's week pending
             // unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(unsolvedDaily)
@@ -123,7 +130,12 @@ const problemDataExtractor = (
               const newWeekCF = problemBatch.slice(1)
               unsolvedMergeWeekCF = unsolvedMergeWeekCF.concat(newWeekCF)
             }
-            chrome.storage.local.set({ weekCF: unsolvedMergeWeekCF })
+            chrome.storage.local.set({
+              dailyCF: newDailyCF,
+              weekCF: unsolvedMergeWeekCF,
+              lastFetchedProblemsDate: currentDate.toString(),
+              isNewMethodCFSet: 'no',
+            })
           }
           // console.log('newDailyCF', newDailyCF)
           // console.log('unsolvedMergeWeekCF', unsolvedMergeWeekCF)
@@ -134,16 +146,18 @@ const problemDataExtractor = (
         //console.log('Not logged into Codeforces')
       }
 
-      //console.log('Problem 1', settings.methodCF)
-      //console.log('Problem 2', settings.weekCF)
-      //console.log('Problem 4', settings.dailyCF)
-      //console.log('Problem 5', settings.solvedCF)
-      //console.log('set context from problem data extractor')
+      // console.log('Problem 1', settings.methodCF)
+      // console.log('Problem 2', settings.weekCF)
+      // console.log('Problem 4', settings.dailyCF)
+      // console.log('Problem 5', settings.solvedCF)
+      // console.log('set context from problem data extractor')
       contextProblems(setContextProblemsCF, setShouldDisplayData)
+
+      // chrome.storage.local.set({
+      //   lastFetchedProblemsDate: currentDate.toString(),
+      // })
     }
   )
-
-  chrome.storage.local.set({ lastFetchedProblemsDate: currentDate.toString() })
 }
 
 export default problemDataExtractor

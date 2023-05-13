@@ -16,6 +16,15 @@ const Pending = () => {
   //console.log('Favourite after re-render in Pending component', favourite)
   const data = []
   for (let i = 0; i < week.length; i++) {
+    if (
+      week[i] === null ||
+      week[i].problem === null ||
+      week[i].problem.name === null ||
+      week[i].problem.contestId === null ||
+      week[i].problem.index === null ||
+      week[i].fetchTag === null
+    )
+      continue
     let obj = {
       problem: {
         name: week[i].problem.name,

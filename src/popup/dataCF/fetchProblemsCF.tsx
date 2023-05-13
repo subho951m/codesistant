@@ -33,9 +33,9 @@ const fetchProblemsCF = (
           setContextProblemsCF,
           setShouldDisplayData
         )
-        chrome.storage.local.set({
-          lastFetchedProblemsDate: currentDate.toString(),
-        })
+        // chrome.storage.local.set({
+        //   lastFetchedProblemsDate: currentDate.toString(),
+        // })
         // console.log('Problems data fetched')
       } else {
         // The response wasn't a JSON object

@@ -102,7 +102,7 @@ const handleProblemsCF = (
                       setContextProblemsCF,
                       setShouldDisplayData
                     )
-                    chrome.storage.local.set({ isNewMethodCFSet: 'no' })
+                    // chrome.storage.local.set({ isNewMethodCFSet: 'no' })
                   } else {
                     // run time error
                   }
@@ -124,7 +124,7 @@ const handleProblemsCF = (
                     setContextProblemsCF,
                     setShouldDisplayData
                   )
-                  chrome.storage.local.set({ isNewMethodCFSet: 'no' })
+                  // chrome.storage.local.set({ isNewMethodCFSet: 'no' })
                 } else {
                   //console.log(
                   //   'No fetching so Setcontext called from handle Problem'
@@ -162,7 +162,7 @@ const handleProblemsCF = (
                   setContextProblemsCF,
                   setShouldDisplayData
                 )
-                chrome.storage.local.set({ isNewMethodCFSet: 'no' })
+                // chrome.storage.local.set({ isNewMethodCFSet: 'no' })
               }
             )
           }
