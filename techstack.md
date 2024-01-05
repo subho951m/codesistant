@@ -44,7 +44,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [subho951m/codesistant](https://github.com/subho951m/codesistant)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|39<br/>Tools used|12/24/23 <br/>Report generated|
+|41<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
 </div>
 
@@ -197,9 +197,9 @@ Full tech stack [here](/techstack.md)
 </table>
 
 
-## <img src='https://img.stackshare.io/group.svg' /> Open source packages (23)</h2>
+## <img src='https://img.stackshare.io/group.svg' /> Open source packages (25)</h2>
 
-## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (23)
+## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (25)
 
 |NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
 |:------|:------|:------|:------|:------|:------|
@@ -216,6 +216,8 @@ Full tech stack [here](/techstack.md)
 |[eslint-plugin-react](https://www.npmjs.com/eslint-plugin-react)|v7.32.2|04/06/23|Subham |MIT|N/A|
 |[eslint-plugin-react-hooks](https://www.npmjs.com/eslint-plugin-react-hooks)|v4.6.0|04/06/23|Subham |MIT|N/A|
 |[html-webpack-plugin](https://www.npmjs.com/html-webpack-plugin)|v5.5.0|05/13/23|Subham |MIT|N/A|
+|[husky](https://www.npmjs.com/husky)|v4.3.8|03/16/23|Subham |MIT|N/A|
+|[lint-staged](https://www.npmjs.com/lint-staged)|v13.2.0|03/16/23|Subham |MIT|N/A|
 |[prop-types](https://www.npmjs.com/prop-types)|v15.8.1|04/07/23|Subham |MIT|N/A|
 |[react-dom](https://www.npmjs.com/react-dom)|v18.2.0|04/06/23|Subham |MIT|N/A|
 |[react-router-dom](https://www.npmjs.com/react-router-dom)|v6.9.0|04/06/23|Subham |MIT|N/A|
