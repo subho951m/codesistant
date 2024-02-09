@@ -1,4 +1,8 @@
 # codesistant
+
+It is a Chrome extension made for productivity purposes for competitive programmers. It extracts coding problems from websites according to the user's choice. It suggests coding problems every day to maintain consistency and perseverance. It fetches problems from a famous competitive programming website called codeforces.com. It keeps track of users' overall progress.
+
+
 You should have `npm` and `yarn` installed on your computer.  
   
   
